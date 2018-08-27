@@ -1,6 +1,7 @@
 package com.sun.mq;
 
 import com.rabbitmq.client.Channel;
+
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.*;
 import org.slf4j.Logger;
@@ -45,13 +46,13 @@ public class RabbitListenerAspect {
                 try {
                     c.basicNack(m.getMessageProperties().getDeliveryTag(), false, false);
                 } catch (IOException ioe) {
-                   log.error("mq重置错误 {}",  ioe);
+                    log.error("mq重置错误 {}", ioe);
                 }
             }
 
             List<Object> collect = argsList.stream().filter(f -> !(f instanceof Channel)).filter(f -> !(f instanceof Message)).collect(Collectors.toList());
             // json
-            log.error("mq消费错误 {}",  collect);
+            log.error("mq消费错误 {} \r\n mq消费内容 {}", e, collect);
         }
     }
 }

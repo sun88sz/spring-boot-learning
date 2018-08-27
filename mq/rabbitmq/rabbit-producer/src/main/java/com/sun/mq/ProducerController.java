@@ -22,4 +22,10 @@ public class ProducerController {
     public User test() {
         return producer1.test();
     }
+
+
+    @GetMapping(path = "/test2")
+    public User test2() {
+        return producer1.test2();
+    }
 }

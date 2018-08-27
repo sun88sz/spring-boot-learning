@@ -4,7 +4,9 @@ import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.MessageProperties;
 import lombok.extern.apachecommons.CommonsLog;
 import org.springframework.amqp.core.Message;
-import org.springframework.amqp.core.Queue;
+import org.springframework.amqp.rabbit.annotation.Exchange;
+import org.springframework.amqp.rabbit.annotation.Queue;
+import org.springframework.amqp.rabbit.annotation.QueueBinding;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -21,13 +23,24 @@ import java.io.IOException;
 public class Consumer1 {
 
 
-    @RabbitListener(queues = "queue.A")
+//    @RabbitListener(queues = "queue.A")
+    @RabbitListener(queuesToDeclare = @Queue("queue.A") )
+//    @RabbitListener(bindings = {@QueueBinding(value = @Queue(value = "queue.A", durable = "true"), exchange = @Exchange(name = "simpleExchange"))})
     public void aa(Channel channel, Message message, User user) throws IOException {
         System.out.println(user);
 
         System.out.println(user.getId());
         System.out.println(user.getName());
         throw new RuntimeException("xxxxxxxxxxx");
+    }
+
+
+    @RabbitListener(queuesToDeclare = @Queue("queue.B") )
+    public void bb(Channel channel, Message message, User user) throws IOException {
+        System.out.println(user);
+
+        System.out.println(user.getId());
+        System.out.println(user.getName());
     }
 
 
@@ -43,7 +56,7 @@ public class Consumer1 {
 
         //ack返回false，并重新回到队列，api里面解释得很清楚
         channel.basicNack(message.getMessageProperties().getDeliveryTag(), false, true);
-//拒绝消息
+        //拒绝消息
         channel.basicReject(message.getMessageProperties().getDeliveryTag(), true);
 
 
