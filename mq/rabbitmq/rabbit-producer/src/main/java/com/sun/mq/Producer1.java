@@ -62,6 +62,8 @@ public class Producer1 {
         
         
         amqpTemplate.convertAndSend("simpleExchange", "com.sun.topicB", user, processor);
+        
+        amqpTemplate.convertAndSend("simpleExchange", "com.sun.topicB", user);
 
         return user;
     }

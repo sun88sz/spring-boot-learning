@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.springframework.amqp.core.Binding;
 import org.springframework.amqp.core.BindingBuilder;
+import org.springframework.amqp.core.DirectExchange;
 import org.springframework.amqp.core.Exchange;
 import org.springframework.amqp.core.ExchangeBuilder;
 import org.springframework.amqp.core.Queue;
@@ -49,8 +50,8 @@ public class MqConfiguration {
      * @return
      */
     @Bean
-    public TopicExchange delayExchange() {
-        return (TopicExchange) ExchangeBuilder.topicExchange("simpleExchange").delayed().withArgument("x-delayed-message", true).build();
+    public DirectExchange delayExchange() {
+        return (DirectExchange)ExchangeBuilder.directExchange("simpleExchange").delayed().build();
     }
 
 
@@ -60,7 +61,7 @@ public class MqConfiguration {
     }
 
     @Bean
-    public Binding bindingExchangeQueueB(Queue queueB, TopicExchange delayExchange) {
+    public Binding bindingExchangeQueueB(Queue queueB, DirectExchange delayExchange) {
         return BindingBuilder.bind(queueB).to(delayExchange).with("com.sun.topicB");
     }
 }
