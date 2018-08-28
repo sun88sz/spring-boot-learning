@@ -31,7 +31,7 @@ public class Consumer1 {
 
         System.out.println(user.getId());
         System.out.println(user.getName());
-        throw new RuntimeException("xxxxxxxxxxx");
+//        throw new RuntimeException("xxxxxxxxxxx");
     }
 
 
