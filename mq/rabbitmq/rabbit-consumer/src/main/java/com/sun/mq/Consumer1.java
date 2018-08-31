@@ -26,9 +26,11 @@ public class Consumer1 {
 //    @RabbitListener(queues = "queue.A")
     @RabbitListener(queuesToDeclare = @Queue("queue.A") )
 //    @RabbitListener(bindings = {@QueueBinding(value = @Queue(value = "queue.A", durable = "true"), exchange = @Exchange(name = "simpleExchange"))})
-    public void aa(Channel channel, Message message, String user) throws IOException {
+    public void aa(Channel channel, Message message, User user) throws IOException {
         System.out.println(user);
 
+        System.out.println(user.getId());
+        System.out.println(user.getName());
         throw new RuntimeException("xxxxxxxxxxx");
     }
 

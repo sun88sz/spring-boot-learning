@@ -23,20 +23,19 @@ import org.springframework.context.annotation.Configuration;
 public class MqConfiguration {
 
 
-    @Bean
-    public TopicExchange simpleExchange() {
-      return new TopicExchange("simpleExchange");
-    }
-
-
     /**
-     * 使用 exchange的方式
+     * 定义一个普通的Exchange
      *
      * @return
      */
     @Bean
+    public TopicExchange simpleExchange() {
+        return new TopicExchange("simpleExchange");
+    }
+    
+    @Bean
     public Queue queueA() {
-        return new Queue("queue.A", true);
+        return new Queue("queue.A");
     }
 
     @Bean
@@ -45,4 +44,24 @@ public class MqConfiguration {
     }
 
 
+    /**
+     * 定义一个delay的Exchange
+     *
+     * @return
+     */
+    @Bean
+    public DirectExchange delayExchange() {
+        return (DirectExchange) ExchangeBuilder.directExchange("delayExchange").delayed().build();
+    }
+
+
+    @Bean
+    public Queue queueB() {
+        return new Queue("queue.B");
+    }
+
+    @Bean
+    public Binding bindingExchangeQueueB(Queue queueB, DirectExchange delayExchange) {
+        return BindingBuilder.bind(queueB).to(delayExchange).with("com.sun.topicB");
+    }
 }

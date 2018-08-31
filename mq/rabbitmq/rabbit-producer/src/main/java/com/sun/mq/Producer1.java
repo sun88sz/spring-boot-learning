@@ -23,8 +23,7 @@ public class Producer1 {
     @Autowired
     private AmqpTemplate amqpTemplate;
 
-    public User test() {
-
+    private User createUser(){
         User user = new User();
         Random random = new Random();
         int i = random.nextInt();
@@ -33,21 +32,20 @@ public class Producer1 {
         user.setId(l);
         user.setName("name");
 
-        amqpTemplate.convertAndSend("simpleExchange", "com.sun.topicA", "kghkjhlkjhkjhlkjh");
+        return user;
+    }
 
+
+    public User test() {
+        User user = createUser();
+        amqpTemplate.convertAndSend("simpleExchange", "com.sun.topicA", user);
         return user;
     }
 
 
     public User test2() {
 
-        User user = new User();
-        Random random = new Random();
-        int i = random.nextInt();
-        long l = random.nextLong();
-        user.setAge(i);
-        user.setId(l);
-        user.setName("name");
+        User user = createUser();
 
         // 延时消息
         int times = 5000;
@@ -58,13 +56,9 @@ public class Producer1 {
             message.getMessageProperties().setDelay(times);
             return message;
         };
-
-        
-        
-        amqpTemplate.convertAndSend("simpleExchange", "com.sun.topicB", user, processor);
-        
-        amqpTemplate.convertAndSend("simpleExchange", "com.sun.topicB", user);
-
+        amqpTemplate.convertAndSend("delayExchange", "com.sun.topicB", user, processor);
+        // 如果不加 processor，队列将不会延时
+//        amqpTemplate.convertAndSend("delayExchange", "com.sun.topicB", user);
         return user;
     }
 }
