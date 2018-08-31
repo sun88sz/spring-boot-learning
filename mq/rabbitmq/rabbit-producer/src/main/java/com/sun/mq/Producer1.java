@@ -33,7 +33,7 @@ public class Producer1 {
         user.setId(l);
         user.setName("name");
 
-        amqpTemplate.convertAndSend("simpleExchange", "com.sun.topicA", user);
+        amqpTemplate.convertAndSend("simpleExchange", "com.sun.topicA", "kghkjhlkjhkjhlkjh");
 
         return user;
     }

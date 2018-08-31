@@ -45,23 +45,4 @@ public class MqConfiguration {
     }
 
 
-    /**
-     * 定义一个delay的exchange
-     * @return
-     */
-    @Bean
-    public DirectExchange delayExchange() {
-        return (DirectExchange)ExchangeBuilder.directExchange("simpleExchange").delayed().build();
-    }
-
-
-    @Bean
-    public Queue queueB() {
-        return new Queue("queue.B", true);
-    }
-
-    @Bean
-    public Binding bindingExchangeQueueB(Queue queueB, DirectExchange delayExchange) {
-        return BindingBuilder.bind(queueB).to(delayExchange).with("com.sun.topicB");
-    }
 }
