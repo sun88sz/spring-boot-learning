@@ -11,6 +11,7 @@
     <modules>
         <module>mq</module>
         <module>test</module>
+        <module>utils</module>
     </modules>
 
     <properties>

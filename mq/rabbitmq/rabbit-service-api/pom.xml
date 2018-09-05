@@ -9,19 +9,14 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>rabbit-producer</artifactId>
+    <artifactId>rabbit-service-api</artifactId>
+
 
     <dependencies>
         <dependency>
-            <groupId>com.sun</groupId>
-            <artifactId>rabbit-service-api</artifactId>
-            <version>1.0-SNAPSHOT</version>
-        </dependency>
-
-        <dependency>
-            <groupId>com.alibaba</groupId>
-            <artifactId>fastjson</artifactId>
-            <version>1.2.49</version>
+            <groupId>org.springframework.data</groupId>
+            <artifactId>spring-data-redis</artifactId>
+            <scope>provided</scope>
         </dependency>
     </dependencies>
 </project>
