@@ -67,17 +67,15 @@ public class Producer2 {
     public User test2() {
         User user = User.createUser();
 
-        String messageId = String.valueOf(snowflakeIdWorker.nextId());
-        CorrelationData correlationData = new CorrelationData();
-
         // 此处其实也有先后问题
         // 先保存 后发送
         // 重发
+        String messageId = String.valueOf(snowflakeIdWorker.nextId());
         mqRetry.add(messageId, user, SIMPLE_EXCHANGE, ROUTING_KEY_TOPIC_A);
 
         // simpleExchange2 不存在 会发送失败
+        CorrelationData correlationData = new CorrelationData(messageId);
         amqpTemplate.convertAndSend("simpleExchange2", ROUTING_KEY_TOPIC_A, user, correlationData);
-
 
         return user;
     }

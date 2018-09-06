@@ -14,6 +14,7 @@
     <modules>
         <module>rabbit-consumer</module>
         <module>rabbit-producer</module>
+        <module>rabbit-producer-base</module>
         <module>rabbit-service-api</module>
     </modules>
 
@@ -22,18 +23,12 @@
         <dependency>
             <groupId>com.sun</groupId>
             <artifactId>utils</artifactId>
-            <version>1.0-SNAPSHOT</version>
-        </dependency>
-        
-        
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
+            <version>${parent.version}</version>
         </dependency>
 
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-aop</artifactId>
+            <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
 
         <dependency>

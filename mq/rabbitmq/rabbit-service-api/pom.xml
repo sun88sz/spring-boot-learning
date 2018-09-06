@@ -12,11 +12,4 @@
     <artifactId>rabbit-service-api</artifactId>
 
 
-    <dependencies>
-        <dependency>
-            <groupId>org.springframework.data</groupId>
-            <artifactId>spring-data-redis</artifactId>
-            <scope>provided</scope>
-        </dependency>
-    </dependencies>
 </project>
