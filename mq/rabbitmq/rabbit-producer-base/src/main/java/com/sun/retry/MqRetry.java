@@ -48,31 +48,31 @@ public interface MqRetry extends InitializingBean {
             while (true) {
                 try {
                     Thread.sleep(10000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
 
-                long now = System.currentTimeMillis();
-                Map<String, MqMessageRetry> map = getAll();
+                    long now = System.currentTimeMillis();
+                    Map<String, MqMessageRetry> map = getAll();
 
-                if (map.entrySet() != null) {
+                    if (map.entrySet() != null) {
 
-                    map.entrySet().stream().forEach(
-                            e -> {
-                                String key = e.getKey();
-                                MqMessageRetry mr = e.getValue();
-                                if (mr != null) {
-                                    long time = mr.getTime();
-                                    // 等待消息发送10s后 进行重试操作
-                                    if (time - now > 10000) {
-                                        // 重新发送 等待回调
-                                        CorrelationData data = new CorrelationData(key);
-                                        // 覆盖
-                                        getRabbitTemplate().convertAndSend(mr.getExchange(), mr.getRoutingKey(), mr.getMessage(), data);
+                        map.entrySet().stream().forEach(
+                                e -> {
+                                    String key = e.getKey();
+                                    MqMessageRetry mr = e.getValue();
+                                    if (mr != null) {
+                                        long time = mr.getTime();
+                                        // 等待消息发送10s后 进行重试操作
+                                        if (now - time > 10000) {
+                                            // 重新发送 等待回调
+                                            CorrelationData data = new CorrelationData(key);
+                                            // 覆盖
+                                            getRabbitTemplate().convertAndSend(mr.getExchange(), mr.getRoutingKey(), mr.getMessage(), data);
+                                        }
                                     }
                                 }
-                            }
-                    );
+                        );
+                    }
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
                 }
             }
         }).start();
@@ -91,7 +91,7 @@ public interface MqRetry extends InitializingBean {
             if (!ack) {
                 getLog().error("消息发送失败：" + cause);
                 if (correlationData != null) {
-                    getLog().error("数据：", correlationData.toString());
+                    getLog().error("数据：{}", correlationData.toString());
                 }
             }
             // 成功

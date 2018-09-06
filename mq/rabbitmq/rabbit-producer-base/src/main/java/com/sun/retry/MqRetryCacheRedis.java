@@ -7,31 +7,30 @@ import lombok.Getter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.RedisTemplate;
 
 /**
  * @author : Sun
- * @date : 2018/9/5 17:03
+ * @date : 2018/9/5 19:03
  */
 public class MqRetryCacheRedis implements MqRetry {
+
+    @Getter
     private Logger log = LoggerFactory.getLogger(MqRetryCacheRedis.class);
 
-    @Override
-    public Logger getLog() {
-        return log;
-    }
-    
     @Getter
-    @Autowired
     private RabbitTemplate rabbitTemplate;
 
-    @Autowired
     private RedisTemplate redisTemplate;
 
-    @Value("${mq_message_retry:MQ_MESSAGE_RETRY}")
-    private static String MQ_RETRY;
+    private String MQ_RETRY;
+
+
+    public MqRetryCacheRedis(RedisTemplate redisTemplate, RabbitTemplate rabbitTemplate, String MQ_RETRY) {
+        this.redisTemplate = redisTemplate;
+        this.rabbitTemplate = rabbitTemplate;
+        this.MQ_RETRY = MQ_RETRY;
+    }
 
     /**
      * 初始化
@@ -41,11 +40,15 @@ public class MqRetryCacheRedis implements MqRetry {
     @Override
     public void afterPropertiesSet() throws Exception {
         defineConfirmCallback();
-        createThread();
+
+        // 初始化Map
         Map entries = redisTemplate.opsForHash().entries(MQ_RETRY);
         if (entries == null) {
             redisTemplate.opsForHash().putAll(MQ_RETRY, new HashMap<String, MqMessageRetry>());
         }
+
+        // 启动监控线程
+        createThread();
     }
 
     /**
@@ -56,14 +59,7 @@ public class MqRetryCacheRedis implements MqRetry {
      */
     @Override
     public void add(String id, Object message, String exchange, String routingKey) {
-        MqMessageRetry msg = new MqMessageRetry();
-        msg.setMessage(message);
-        msg.setTimes(1);
-        msg.setTime(System.currentTimeMillis());
-        msg.setExchange(exchange);
-        msg.setRoutingKey(routingKey);
-
-        redisTemplate.opsForHash().put(MQ_RETRY, id, message);
+        redisTemplate.opsForHash().put(MQ_RETRY, id, new MqMessageRetry(System.currentTimeMillis(), message, exchange, routingKey));
     }
 
     /**
@@ -92,7 +88,7 @@ public class MqRetryCacheRedis implements MqRetry {
      */
     @Override
     public void del(String id) {
-        redisTemplate.opsForHash().delete(MQ_RETRY , id);
+        redisTemplate.opsForHash().delete(MQ_RETRY, id);
     }
-    
+
 }

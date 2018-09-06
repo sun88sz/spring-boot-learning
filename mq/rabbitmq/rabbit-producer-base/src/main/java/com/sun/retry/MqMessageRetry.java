@@ -4,21 +4,20 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
+
 /**
  * @author Sun
  */
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class MqMessageRetry {
+public class MqMessageRetry implements Serializable {
     /**
-     * 当前时间
+     * 生成时间
      */
     private long time;
-    /**
-     * 重试次数
-     */
-    private int times;
+
     /**
      * 内容
      */
