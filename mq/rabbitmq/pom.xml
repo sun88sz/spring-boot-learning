@@ -16,6 +16,7 @@
         <module>rabbit-producer</module>
         <module>rabbit-producer-base</module>
         <module>rabbit-service-api</module>
+        <module>rabbit-consumer-aspect</module>
     </modules>
 
 
@@ -29,11 +30,6 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-aop</artifactId>
         </dependency>
 
         <dependency>

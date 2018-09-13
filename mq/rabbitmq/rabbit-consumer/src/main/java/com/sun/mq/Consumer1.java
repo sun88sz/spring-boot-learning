@@ -1,6 +1,7 @@
 package com.sun.mq;
 
 import com.rabbitmq.client.Channel;
+import com.sun.MqDefine;
 import com.sun.bean.User;
 
 import org.springframework.amqp.core.Message;
@@ -21,7 +22,7 @@ public class Consumer1 {
 
 
 //    @RabbitListener(queues = "queue.A")
-    @RabbitListener(queuesToDeclare = @Queue("queue.A") )
+    @RabbitListener(queuesToDeclare = @Queue(MqDefine.QUEUE_A) )
 //    @RabbitListener(bindings = {@QueueBinding(value = @Queue(value = "queue.A", durable = "true"), exchange = @Exchange(name = "simpleExchange"))})
     public void aa(Channel channel, Message message, User user) throws IOException {
         System.out.println(user);
@@ -32,7 +33,7 @@ public class Consumer1 {
     }
 
 
-    @RabbitListener(queuesToDeclare = @Queue("queue.B") )
+    @RabbitListener(queuesToDeclare = @Queue(MqDefine.QUEUE_B) )
     public void bb(Channel channel, Message message, User user) throws IOException {
         System.out.println(user);
 
