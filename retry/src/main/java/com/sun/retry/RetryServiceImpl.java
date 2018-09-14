@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
  * @author : Sun
  * @date : 2018/9/7 16:45
  */
-
 @Slf4j
 @Service("retryService")
 public class RetryServiceImpl implements RetryService {

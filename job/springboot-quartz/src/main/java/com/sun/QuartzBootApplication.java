@@ -7,6 +7,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * @author : Sun
  * @date : 2018/9/13 19:36
  */
+
 @SpringBootApplication
 public class QuartzBootApplication {
 

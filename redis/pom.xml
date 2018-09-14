@@ -9,13 +9,12 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>retry</artifactId>
+    <artifactId>redis</artifactId>
+    <packaging>pom</packaging>
+    <modules>
+        <module>redisson</module>
+        <module>redis-lock</module>
+    </modules>
 
-    <dependencies>
-        <dependency>
-            <groupId>org.springframework.retry</groupId>
-            <artifactId>spring-retry</artifactId>
-        </dependency>
-    </dependencies>
 
 </project>

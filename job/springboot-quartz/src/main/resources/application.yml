@@ -1,0 +1,3 @@
+scheduled:
+  cron:
+    A: 0/10 * * * * ?
