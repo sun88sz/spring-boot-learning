@@ -14,6 +14,7 @@
     <modules>
         <module>quartz</module>
         <module>springboot-quartz</module>
+        <module>distributed-quartz</module>
     </modules>
 
 
