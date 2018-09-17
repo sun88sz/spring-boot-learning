@@ -5,7 +5,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.util.concurrent.TimeUnit;
@@ -26,12 +25,13 @@ public class RedisLockTest {
 
     @Test
     public void redisLockTest() {
-        RedisLock redisLock = redisLockManager.getRedisLock("Job:StatsQuality");
-        boolean lock = redisLock.lock(15, TimeUnit.SECONDS);
+//        RedisLock redisLock = redisLockManager.getRedisLock("Job:StatsQuality");
+//        boolean lock = redisLock.lock(30, TimeUnit.SECONDS);
 
-        if (lock) {
-            System.out.println("do something");
-        }
-        redisLock.unlock();
+
+        RedisLock redisLock2 = redisLockManager.getRedisLock("Job:StatsQuality");
+        boolean lock1 = redisLock2.lock(30, TimeUnit.SECONDS);
+
+        redisLock2.unlock();
     }
 }
