@@ -17,9 +17,9 @@ public @interface SynJob {
 
     long waitTime() default 0;
 
-    long expireTime() default 30;
+    long expireTime() default 60;
 
     TimeUnit timeUnit() default TimeUnit.SECONDS;
-
-    String cron();
+    
+    String jobName() default "";
 }

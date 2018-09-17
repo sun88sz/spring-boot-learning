@@ -98,6 +98,7 @@ public class RedisLock {
         // NX setnx
         // PX ms
         String result = jedis.set(this.key, this.uuid, "NX", "PX", expireTime);
+        jedis.close();
         if ("OK".equals(result)) {
             this.lock = true;
             return true;
@@ -151,6 +152,7 @@ public class RedisLock {
         String script = "if redis.call('get', KEYS[1]) == ARGV[1] then return redis.call('del', KEYS[1]) else return 0 end";
         // 正确返回1 错误返回0
         Object result = jedis.eval(script, Collections.singletonList(this.key), Collections.singletonList(this.uuid));
+        jedis.close();
     }
 
 
