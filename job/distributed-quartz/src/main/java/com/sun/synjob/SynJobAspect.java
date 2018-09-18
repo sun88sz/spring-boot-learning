@@ -25,6 +25,7 @@ import java.lang.reflect.Method;
 import java.text.ParseException;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Description: <br/>
@@ -61,7 +62,7 @@ public class SynJobAspect {
         }
 
         String cron = annoScheduled.cron();
-        Date nextTriggerTime = getNextTriggerTime(cron);
+        long timeBetween = getTimeBetween(cron) * 4 / 5;
 
         String keyName = annotation.jobName();
         if (StringUtils.isBlank(keyName)) {
@@ -70,12 +71,15 @@ public class SynJobAspect {
 
         RedisLock redisLock = redisLockManager.getRedisLock(keyName);
         try {
+            String key = SynJobKey + ":" + keyName;
             if (redisLock.lock(annotation.waitTime(), annotation.expireTime(), annotation.timeUnit())) {
-                Object lastTime = redisTemplate.opsForValue().get(SynJobKey + ":" + keyName);
+                Object lastTime = redisTemplate.opsForValue().get(key);
+
                 // 本次执行时间是否被其他job执行过
-                if (lastTime == null || nextTriggerTime.getTime() > Long.valueOf((String) lastTime)) {
+                if (lastTime == null) {
                     // 设置最新更新时间
-                    redisTemplate.opsForValue().set(SynJobKey + ":" + keyName, String.valueOf(nextTriggerTime.getTime()));
+                    redisTemplate.opsForValue().set(key, Long.valueOf(System.currentTimeMillis()).toString());
+                    redisTemplate.expire(key, timeBetween, TimeUnit.MILLISECONDS);
                     // 执行逻辑
                     point.proceed(point.getArgs());
                 }
@@ -88,11 +92,29 @@ public class SynJobAspect {
     }
 
 
-    public static Date getNextTriggerTime(String cron) {
+    public static Long getTimeBetween(String cron) {
         try {
             CronTriggerImpl cronTriggerImpl = new CronTriggerImpl();
             cronTriggerImpl.setCronExpression(cron);
             // 获取下一次执行时间
+            List<Date> dates = TriggerUtils.computeFireTimes(cronTriggerImpl, null, 2);
+
+            if (CollectionUtils.isNotEmpty(dates)) {
+                long between = dates.get(1).getTime() - dates.get(0).getTime();
+                return between;
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return 0L;
+    }
+
+
+    public static Date getNextTriggerTime(String cron) {
+        try {
+            CronTriggerImpl cronTriggerImpl = new CronTriggerImpl();
+            cronTriggerImpl.setCronExpression(cron);
+            // 这个是重点，一行代码搞定
             List<Date> dates = TriggerUtils.computeFireTimes(cronTriggerImpl, null, 1);
 
             if (CollectionUtils.isNotEmpty(dates)) {

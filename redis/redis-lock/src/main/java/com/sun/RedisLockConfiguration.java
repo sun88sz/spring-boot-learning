@@ -3,6 +3,8 @@ package com.sun;
 import com.sun.lock.RedisLockManager;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.AutoConfigureAfter;
+import org.springframework.boot.autoconfigure.AutoConfigureBefore;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.data.redis.RedisAutoConfiguration;
@@ -21,16 +23,15 @@ import org.springframework.data.redis.core.StringRedisTemplate;
  */
 @Configuration
 @ConditionalOnClass(RedisAutoConfiguration.class)
-@Import({JedisConfiguration.class, RedisAutoConfiguration.class})
+@Import(RedisAutoConfiguration.class)
 public class RedisLockConfiguration {
 
     @Value("${redis-lock:REDIS_LOCK}")
     private String REDIS_LOCK_ROOT_KEY;
 
-
     @Bean
     @ConditionalOnBean(StringRedisTemplate.class)
     public RedisLockManager redisLock(StringRedisTemplate redisTemplate) {
-        return new RedisLockManager(redisTemplate,REDIS_LOCK_ROOT_KEY);
+        return new RedisLockManager(redisTemplate, REDIS_LOCK_ROOT_KEY);
     }
 }

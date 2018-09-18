@@ -1,15 +1,15 @@
 package com.sun.lock;
 
+import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.data.redis.connection.RedisConnection;
-import org.springframework.data.redis.connection.jedis.JedisConnection;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.util.ReflectionUtils;
-import redis.clients.jedis.Jedis;
+import org.springframework.data.redis.core.script.DefaultRedisScript;
 
-import java.lang.reflect.Field;
-import java.util.Collections;
+import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
+
+import com.google.common.collect.Lists;
 
 
 /**
@@ -24,9 +24,8 @@ public class RedisLock {
     private boolean lock = false;
     private int times = 5;
 
-    private final RedisTemplate redisClient;
+    private final RedisTemplate redisTemplate;
     private final RedisConnection redisConnection;
-    private final Jedis jedis;
     private String uuid;
 
     /**
@@ -39,12 +38,9 @@ public class RedisLock {
             throw new IllegalArgumentException("RedisTemplate 不能为null!");
         }
         this.key = rootKey + ":" + lockKey;
-        this.redisClient = redisTemplate;
+        this.redisTemplate = redisTemplate;
         this.redisConnection = redisTemplate.getConnectionFactory().getConnection();
         this.uuid = UUID.randomUUID().toString();
-
-        // 根据 redisTemplate 获取 jedis
-        this.jedis = ((JedisConnection) redisConnection).getJedis();
     }
 
 
@@ -62,6 +58,7 @@ public class RedisLock {
             do {
                 // 锁不存在的话，设置锁并设置锁过期时间，即加锁
                 if (atomicLock(expireTime, unit)) {
+                    this.lock = true;
                     return true;
                 }
 
@@ -95,14 +92,36 @@ public class RedisLock {
     private boolean atomicLock(long expireTime, final TimeUnit unit) {
         // 转换格式
         expireTime = unit.toMillis(expireTime);
+
+        // 正确返回1 错误返回0
+        DefaultRedisScript<List> script = new DefaultRedisScript<>();
+        script.setScriptText("if redis.call('setnx',KEYS[1],ARGV[1])==1 then return redis.call('pexpire',KEYS[1],ARGV[2]) else return 0 end");
+        script.setResultType(List.class);
+
+        List rtn = (List) redisTemplate.execute(script, Lists.newArrayList(this.key), this.uuid, String.valueOf(expireTime));
+        if (CollectionUtils.isNotEmpty(rtn)) {
+            if (1 == Integer.valueOf(rtn.get(0).toString())) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+
+    private boolean atomicLockJedis(long expireTime, final TimeUnit unit) {
+        // 转换格式
+        expireTime = unit.toMillis(expireTime);
         // NX setnx
         // PX ms
-        String result = jedis.set(this.key, this.uuid, "NX", "PX", expireTime);
-        jedis.close();
-        if ("OK".equals(result)) {
-            this.lock = true;
-            return true;
-        }
+        //        Jedis jedis = redisConnection.getJedis();
+        //        String result = jedis.set(this.key, this.uuid, "NX", "PX", expireTime);
+
+
+        //        redisTemplate.execute()
+        //        if ("OK".equals(result)) {
+        //            this.lock = true;
+        //            return true;
+        //        }
         return false;
     }
 
@@ -113,10 +132,9 @@ public class RedisLock {
      * @return
      */
     private boolean commonLock(long expireTime, final TimeUnit unit) {
-        if (this.redisClient.opsForValue().setIfAbsent(this.key, this.uuid)) {
+        if (this.redisTemplate.opsForValue().setIfAbsent(this.key, this.uuid)) {
             // 设置锁失效时间, 防止永久阻塞
-            this.redisClient.expire(key, expireTime, unit);
-            this.lock = true;
+            this.redisTemplate.expire(key, expireTime, unit);
             return true;
         }
         return false;
@@ -137,22 +155,39 @@ public class RedisLock {
      * 释放锁
      * 防止释放别人的锁
      */
-    private void commonUnlock() {
-        Object o = redisClient.opsForValue().get(key);
+    private boolean commonUnlock() {
+        Object o = redisTemplate.opsForValue().get(key);
         if (o != null && (o).equals(this.uuid)) {
-            redisClient.delete(key);
+            return redisTemplate.delete(key);
         }
+        return false;
     }
 
     /**
      * 释放锁
      * 使用eval表达式 执行原子操作
      */
-    private void atomicUnlock() {
-        String script = "if redis.call('get', KEYS[1]) == ARGV[1] then return redis.call('del', KEYS[1]) else return 0 end";
+    private boolean atomicUnlock() {
         // 正确返回1 错误返回0
-        Object result = jedis.eval(script, Collections.singletonList(this.key), Collections.singletonList(this.uuid));
-        jedis.close();
+        DefaultRedisScript<List> script = new DefaultRedisScript<>();
+        script.setScriptText("if redis.call('get', KEYS[1]) == ARGV[1] then return redis.call('del', KEYS[1]) else return 0 end");
+        script.setResultType(List.class);
+
+        List rtn = (List) redisTemplate.execute(script, Lists.newArrayList(this.key), this.uuid);
+        if (CollectionUtils.isNotEmpty(rtn)) {
+            if (1 == Integer.valueOf(rtn.get(0).toString())) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private void atomicUnlockJedis() {
+//        String script = "if redis.call('get', KEYS[1]) == ARGV[1] then return redis.call('del', KEYS[1]) else return 0 end";
+//        // 正确返回1 错误返回0
+//        Jedis jedis = redisConnection.getJedis();
+//        Object result = jedis.eval(script, Collections.singletonList(this.key), Collections.singletonList(this.uuid));
+//        jedis.close();
     }
 
 

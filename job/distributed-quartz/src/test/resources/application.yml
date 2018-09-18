@@ -1,0 +1,13 @@
+spring:
+  redis:
+    database: 0
+    host: 127.0.0.1
+    port: 6379
+   
+#14 #当调用return Object方法时，是否进行有效性检查
+#15 redis.pool.testOnReturn=true
+
+    
+scheduled:
+  cron:
+    test1: 0/10 * * * * ?
