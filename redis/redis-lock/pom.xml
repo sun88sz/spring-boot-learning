@@ -23,8 +23,12 @@
             <!--<artifactId>commons-pool2</artifactId>-->
             <!--<version>2.4.2</version>-->
         <!--</dependency>-->
-        
 
+
+        <dependency>
+            <groupId>org.aspectj</groupId>
+            <artifactId>aspectjweaver</artifactId>
+        </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-redis</artifactId>

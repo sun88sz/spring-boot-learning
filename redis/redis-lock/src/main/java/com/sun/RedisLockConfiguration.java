@@ -34,4 +34,5 @@ public class RedisLockConfiguration {
     public RedisLockManager redisLock(StringRedisTemplate redisTemplate) {
         return new RedisLockManager(redisTemplate, REDIS_LOCK_ROOT_KEY);
     }
+    
 }

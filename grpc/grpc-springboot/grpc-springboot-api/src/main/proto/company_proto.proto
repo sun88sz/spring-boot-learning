@@ -1,0 +1,10 @@
+
+syntax = "proto3";
+option java_package = "com.sun.grpc.api";
+option java_outer_classname = "CompanyProto";
+
+message Company {
+    int32 id = 1;
+    string name = 2;
+    string email = 3;
+}

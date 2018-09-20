@@ -9,7 +9,6 @@ import java.util.concurrent.TimeUnit;
  *
  * @author Sun
  */
-
 @Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)
 @Documented

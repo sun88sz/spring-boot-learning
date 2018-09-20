@@ -1,5 +1,4 @@
 import com.google.common.collect.Lists;
-import com.sun.RedisLockTestApplication;
 import com.sun.lock.RedisLock;
 import com.sun.lock.RedisLockManager;
 
@@ -7,13 +6,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.core.script.DefaultRedisScript;
-import org.springframework.data.redis.core.script.RedisScript;
-import org.springframework.data.redis.serializer.RedisSerializer;
-import org.springframework.data.redis.serializer.SerializationException;
-import org.springframework.data.redis.serializer.StringRedisSerializer;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.util.List;
@@ -36,6 +30,17 @@ public class RedisLockTest {
     private StringRedisTemplate redisTemplate;
 
 
+    @Test
+    public void redisLockTest() {
+        RedisLock redisLock = redisLockManager.getRedisLock("Job:StatsQuality");
+        boolean lock = redisLock.lock(30, TimeUnit.SECONDS);
+        redisLock.unlock();
+
+        RedisLock redisLock2 = redisLockManager.getRedisLock("Job:StatsQuality");
+        boolean lock1 = redisLock2.lock(30, TimeUnit.SECONDS);
+
+        redisLock2.unlock();
+    }
 
     @Test
     public void lockTest() {
@@ -73,16 +78,5 @@ public class RedisLockTest {
 
 
 
-    @Test
-    public void redisLockTest() {
-        RedisLock redisLock = redisLockManager.getRedisLock("Job:StatsQuality");
-        boolean lock = redisLock.lock(30, TimeUnit.SECONDS);
-
-
-        RedisLock redisLock2 = redisLockManager.getRedisLock("Job:StatsQuality");
-        boolean lock1 = redisLock2.lock(30, TimeUnit.SECONDS);
-
-        redisLock2.unlock();
-    }
 
 }

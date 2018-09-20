@@ -22,11 +22,20 @@ public class RedisLock {
 
     private String key;
     private boolean lock = false;
-    private int times = 5;
+
 
     private final RedisTemplate redisTemplate;
     private final RedisConnection redisConnection;
     private String uuid;
+
+    /**
+     * 等待时间内，线程最多唤醒次数
+     */
+    private int times = 10;
+    /**
+     * 等待时间内，线程最小唤醒间隔（ms）
+     */
+    private long minSleepTime = 100L;
 
     /**
      * @param redisTemplate
@@ -53,6 +62,8 @@ public class RedisLock {
         // 以毫秒为单位
         long beginTime = System.currentTimeMillis();
         maxWaitTime = unit.toMillis(maxWaitTime);
+
+        long sleepTime = calSleepTime(maxWaitTime);
         try {
             // 在timeout的时间范围内不断轮询锁
             do {
@@ -63,14 +74,33 @@ public class RedisLock {
                 }
 
                 // 线程睡眠
-                // 按次数最多获取5次锁
-                Thread.sleep(maxWaitTime / times);
+                // 按次数最多获取10次锁
+                Thread.sleep(sleepTime);
             }
             while (System.currentTimeMillis() - beginTime < maxWaitTime);
         } catch (Exception e) {
             throw new RuntimeException("locking error");
         }
         return false;
+    }
+
+    public boolean lock(long maxWaitTime, long expireTime) {
+        return lock(maxWaitTime, expireTime, TimeUnit.MILLISECONDS);
+    }
+
+    /**
+     * 线程等待时间
+     *
+     * @param maxWaitTime
+     * @return
+     */
+    private long calSleepTime(long maxWaitTime) {
+        long sleepTime = maxWaitTime / times;
+        if (sleepTime < minSleepTime) {
+            return minSleepTime;
+        } else {
+            return sleepTime;
+        }
     }
 
     /**
@@ -82,6 +112,10 @@ public class RedisLock {
      */
     public boolean lock(long keyExpireTime, final TimeUnit unit) {
         return lock(0, keyExpireTime, unit);
+    }
+
+    public boolean lock(long keyExpireTime) {
+        return lock(0, keyExpireTime, TimeUnit.MILLISECONDS);
     }
 
     /**
