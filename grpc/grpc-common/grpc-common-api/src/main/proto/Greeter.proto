@@ -1,5 +1,13 @@
 syntax = "proto3";
 
+
+//option java_multiple_files = true;
+//定义输出的目录，生成的目录就是“net/devh/examples/grpc/lib”下面
+option java_package = "com.sun";
+//定义输出的文件名称，生成在lib下的就是HelloWorldProto.class
+//option java_outer_classname = "HelloWorldProto";
+
+
 service Greeter{
     rpc SayHello (HelloRequest) returns (HelloReply) {}
 }

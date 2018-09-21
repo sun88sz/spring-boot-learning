@@ -13,6 +13,8 @@
     <packaging>pom</packaging>
     <modules>
         <module>grpc-common-api</module>
+        <module>grpc-common-server</module>
+        <module>grpc-common-client</module>
     </modules>
     
     <dependencies>
