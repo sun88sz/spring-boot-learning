@@ -22,7 +22,8 @@ public class JobTest1 {
      * 每30s执行一次
      */
     @SynJob(jobName = "JOB1")
-    @Scheduled(cron = "0/10 * * * * ?")
+//    @Scheduled(cron = "0/10 * * * * ?")
+    @Scheduled(cron = "${scheduled.cron.test1}")
     public void reportCurrentByCron() {
         System.out.println("JOB1 - " + sdf.format(SynJobAspect.getNextTriggerTime("0/10 * * * * ?")));
     }

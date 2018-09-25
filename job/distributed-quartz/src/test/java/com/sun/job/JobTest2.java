@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
  * @author : Sun
  * @date : 2018/9/17 16:19
  */
-@Component
+//@Component
 public class JobTest2 {
 
 

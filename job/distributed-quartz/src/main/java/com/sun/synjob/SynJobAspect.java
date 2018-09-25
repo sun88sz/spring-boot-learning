@@ -16,6 +16,9 @@ import org.quartz.impl.triggers.CronTriggerImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
+import org.springframework.core.env.PropertySource;
+import org.springframework.core.env.PropertySources;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -25,7 +28,12 @@ import java.lang.reflect.Method;
 import java.text.ParseException;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
+import java.util.Spliterator;
+import java.util.Spliterators;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Stream;
+import java.util.stream.StreamSupport;
 
 /**
  * Description: <br/>
@@ -46,13 +54,17 @@ public class SynJobAspect {
     @Autowired
     private StringRedisTemplate redisTemplate;
 
+
+    @Autowired
+    private PropertySourcesPlaceholderConfigurer configurer;
+
     @Pointcut("@annotation(com.sun.synjob.SynJob)")
     public void synJobAspect() {
     }
 
     @Around(value = "synJobAspect()")
     public void around(ProceedingJoinPoint point) throws Throwable {
-
+        
         Class clazz = point.getTarget().getClass();
         Method method = ((MethodSignature) point.getSignature()).getMethod();
         SynJob annotation = method.getAnnotation(SynJob.class);
@@ -62,7 +74,11 @@ public class SynJobAspect {
         }
 
         String cron = annoScheduled.cron();
+        if (false) {
+            cron = getCronStr(cron);
+        }
         long timeBetween = getTimeBetween(cron) * 4 / 5;
+
 
         String keyName = annotation.jobName();
         if (StringUtils.isBlank(keyName)) {
@@ -107,6 +123,27 @@ public class SynJobAspect {
             e.printStackTrace();
         }
         return 0L;
+    }
+
+    private String getCronStr(String cron) {
+        PropertySources appliedPropertySources = configurer.getAppliedPropertySources();
+        Stream<PropertySource<?>> stream = StreamSupport.stream(Spliterators.spliteratorUnknownSize(appliedPropertySources.iterator(), Spliterator.ORDERED), false);
+        Optional<String> s = stream.filter(
+                p -> p != null && p.getProperty(cron) != null
+        ).findAny().map(
+                p -> {
+                    Object property = p.getProperty(cron);
+                    if (property != null) {
+                        return (String) property;
+                    }
+                    return null;
+                }
+        );
+        if (s.isPresent()) {
+            return s.get();
+        } else {
+            return null;
+        }
     }
 
 

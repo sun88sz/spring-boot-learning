@@ -27,8 +27,8 @@ public class ScheduledDistributed {
     SimpleDateFormat dateFormatFull = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss:SSS");
     SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMddHHmmss");
 
-    @Autowired
-    private RedissonClient redissonClient;
+//    @Autowired
+//    private RedissonClient redissonClient;
 
     public ScheduledDistributed(String cron) {
         this.cron = cron;
@@ -48,7 +48,7 @@ public class ScheduledDistributed {
             String format = dateFormat.format(nextTime);
             log.info("Scheduling Next time is {}", format);
 
-            RLock lock = redissonClient.getLock("SCHEDULED:A");
+//            RLock lock = redissonClient.getLock("SCHEDULED:A");
 
             // 这里如果无法获取锁，一定是有其他的job运行了，所以没必要重试
 //            boolean b = lock.lock();
