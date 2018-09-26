@@ -10,4 +10,4 @@ spring:
     
 scheduled:
   cron:
-    test1: 0/10 * * * * ?
+    test1: 0/5 * * * * ?

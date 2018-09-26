@@ -33,8 +33,10 @@ public class RedisLockTest {
     @Test
     public void redisLockTest() {
         RedisLock redisLock = redisLockManager.getRedisLock("Job:StatsQuality");
-        boolean lock = redisLock.lock(30, TimeUnit.SECONDS);
-        redisLock.unlock();
+        boolean lock = redisLock.lock(10,30, TimeUnit.SECONDS);
+        if(lock) {
+            redisLock.unlock();
+        }
 
         RedisLock redisLock2 = redisLockManager.getRedisLock("Job:StatsQuality");
         boolean lock1 = redisLock2.lock(30, TimeUnit.SECONDS);

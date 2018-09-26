@@ -1,4 +1,4 @@
-package com.sun.lock;
+package com.sun.lock.anno;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;

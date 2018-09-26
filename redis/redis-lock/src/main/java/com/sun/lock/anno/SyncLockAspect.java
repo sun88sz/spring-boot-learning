@@ -1,7 +1,10 @@
-package com.sun.lock;
+package com.sun.lock.anno;
 
 import java.lang.reflect.Method;
 import java.util.concurrent.TimeUnit;
+
+import com.sun.lock.RedisLock;
+import com.sun.lock.RedisLockManager;
 
 import org.apache.commons.lang.StringUtils;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -29,7 +32,7 @@ public class SyncLockAspect {
     @Autowired
     private RedisLockManager redisLockManager;
 
-    @Pointcut("@annotation(com.sun.lock.SyncLock)")
+    @Pointcut("@annotation(com.sun.lock.anno.SyncLock)")
     public void syncLockAspect() {
     }
 
@@ -54,8 +57,6 @@ public class SyncLockAspect {
             if (redisLock.lock(maxWaitTime, expireTime, timeUnit)) {
                 point.proceed(point.getArgs());
             }
-        } catch (Exception e) {
-            throw e;
         } finally {
             redisLock.unlock();
         }

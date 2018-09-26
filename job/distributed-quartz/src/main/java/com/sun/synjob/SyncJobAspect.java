@@ -1,12 +1,12 @@
 package com.sun.synjob;
 
+import com.sun.istack.internal.NotNull;
 import com.sun.lock.RedisLock;
 import com.sun.lock.RedisLockManager;
 
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 import org.aspectj.lang.ProceedingJoinPoint;
-import org.aspectj.lang.Signature;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
@@ -16,24 +16,17 @@ import org.quartz.impl.triggers.CronTriggerImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
-import org.springframework.core.env.PropertySource;
-import org.springframework.core.env.PropertySources;
-import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.context.EmbeddedValueResolverAware;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
+import org.springframework.util.StringValueResolver;
 
 import java.lang.reflect.Method;
 import java.text.ParseException;
 import java.util.Date;
 import java.util.List;
-import java.util.Optional;
-import java.util.Spliterator;
-import java.util.Spliterators;
 import java.util.concurrent.TimeUnit;
-import java.util.stream.Stream;
-import java.util.stream.StreamSupport;
 
 /**
  * Description: <br/>
@@ -43,10 +36,21 @@ import java.util.stream.StreamSupport;
  */
 @Aspect
 @Component
-public class SynJobAspect {
+public class SyncJobAspect implements EmbeddedValueResolverAware {
 
-    final static Logger log = LoggerFactory.getLogger(SynJobAspect.class);
+    final static Logger log = LoggerFactory.getLogger(SyncJobAspect.class);
 
+    @NotNull
+    private StringValueResolver resolver;
+
+    @Override
+    public void setEmbeddedValueResolver(StringValueResolver resolver) {
+        this.resolver = resolver;
+    }
+
+    /**
+     * job同步锁key前缀
+     */
     private static String SynJobKey = "REDIS_SYN_JOB";
 
     @Autowired
@@ -54,29 +58,29 @@ public class SynJobAspect {
     @Autowired
     private StringRedisTemplate redisTemplate;
 
-
-    @Autowired
-    private PropertySourcesPlaceholderConfigurer configurer;
-
-    @Pointcut("@annotation(com.sun.synjob.SynJob)")
+    /**
+     * 定义切入点
+     * 切自定义注解SynJob
+     */
+    @Pointcut("@annotation(com.sun.synjob.SyncJob)")
     public void synJobAspect() {
     }
 
     @Around(value = "synJobAspect()")
     public void around(ProceedingJoinPoint point) throws Throwable {
-        
+
         Class clazz = point.getTarget().getClass();
         Method method = ((MethodSignature) point.getSignature()).getMethod();
-        SynJob annotation = method.getAnnotation(SynJob.class);
+        SyncJob annotation = method.getAnnotation(SyncJob.class);
         Scheduled annoScheduled = method.getAnnotation(Scheduled.class);
         if (annoScheduled == null) {
             point.proceed(point.getArgs());
         }
 
-        String cron = annoScheduled.cron();
-        if (false) {
-            cron = getCronStr(cron);
-        }
+        // cron 表达式
+        String cron = resolver.resolveStringValue(annoScheduled.cron());
+        
+        // 定义过期时间
         long timeBetween = getTimeBetween(cron) * 4 / 5;
 
 
@@ -100,15 +104,13 @@ public class SynJobAspect {
                     point.proceed(point.getArgs());
                 }
             }
-        } catch (Exception e) {
-            throw e;
         } finally {
             redisLock.unlock();
         }
     }
 
 
-    public static Long getTimeBetween(String cron) {
+    private static Long getTimeBetween(String cron) {
         try {
             CronTriggerImpl cronTriggerImpl = new CronTriggerImpl();
             cronTriggerImpl.setCronExpression(cron);
@@ -125,26 +127,6 @@ public class SynJobAspect {
         return 0L;
     }
 
-    private String getCronStr(String cron) {
-        PropertySources appliedPropertySources = configurer.getAppliedPropertySources();
-        Stream<PropertySource<?>> stream = StreamSupport.stream(Spliterators.spliteratorUnknownSize(appliedPropertySources.iterator(), Spliterator.ORDERED), false);
-        Optional<String> s = stream.filter(
-                p -> p != null && p.getProperty(cron) != null
-        ).findAny().map(
-                p -> {
-                    Object property = p.getProperty(cron);
-                    if (property != null) {
-                        return (String) property;
-                    }
-                    return null;
-                }
-        );
-        if (s.isPresent()) {
-            return s.get();
-        } else {
-            return null;
-        }
-    }
 
 
     public static Date getNextTriggerTime(String cron) {
