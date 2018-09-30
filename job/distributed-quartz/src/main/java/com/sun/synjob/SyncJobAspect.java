@@ -58,20 +58,31 @@ public class SyncJobAspect implements EmbeddedValueResolverAware {
     @Autowired
     private StringRedisTemplate redisTemplate;
 
+
     /**
      * 定义切入点
      * 切自定义注解SynJob
      */
-    @Pointcut("@annotation(com.sun.synjob.SyncJob)")
-    public void synJobAspect() {
+    @Pointcut(value = "@annotation(syncJob)", argNames = "syncJob")
+    public void synJobAspect(SyncJob syncJob) {
     }
 
-    @Around(value = "synJobAspect()")
-    public void around(ProceedingJoinPoint point) throws Throwable {
+//    @Pointcut(value = "@annotation(SyncJob)")
+//    public void synJobAspect() {
+//    }
+
+    @Around(value = "synJobAspect(syncJob)")
+    public void around(ProceedingJoinPoint point, SyncJob syncJob) throws Throwable {
 
         Class clazz = point.getTarget().getClass();
         Method method = ((MethodSignature) point.getSignature()).getMethod();
         SyncJob annotation = method.getAnnotation(SyncJob.class);
+
+        System.out.println(annotation);
+        System.out.println(syncJob);
+        
+        
+        
         Scheduled annoScheduled = method.getAnnotation(Scheduled.class);
         if (annoScheduled == null) {
             point.proceed(point.getArgs());
@@ -79,7 +90,7 @@ public class SyncJobAspect implements EmbeddedValueResolverAware {
 
         // cron 表达式
         String cron = resolver.resolveStringValue(annoScheduled.cron());
-        
+
         // 定义过期时间
         long timeBetween = getTimeBetween(cron) * 4 / 5;
 
@@ -126,7 +137,6 @@ public class SyncJobAspect implements EmbeddedValueResolverAware {
         }
         return 0L;
     }
-
 
 
     public static Date getNextTriggerTime(String cron) {

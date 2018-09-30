@@ -18,6 +18,7 @@
         <module>redis</module>
         <module>grpc</module>
         <module>vertx</module>
+        <module>reactive</module>
     </modules>
 
     <properties>
