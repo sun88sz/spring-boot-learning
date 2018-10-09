@@ -15,8 +15,8 @@
         <module>rxjava</module>
         <module>reactor</module>
         <module>webflux</module>
+        <module>vertx</module>
     </modules>
-
 
     <dependencyManagement>
         <dependencies>
