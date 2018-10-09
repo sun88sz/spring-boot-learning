@@ -14,6 +14,7 @@
     <modules>
         <module>rxjava</module>
         <module>reactor</module>
+        <module>webflux</module>
     </modules>
 
 

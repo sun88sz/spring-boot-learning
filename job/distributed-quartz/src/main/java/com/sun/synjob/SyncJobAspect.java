@@ -1,6 +1,5 @@
 package com.sun.synjob;
 
-import com.sun.istack.internal.NotNull;
 import com.sun.lock.RedisLock;
 import com.sun.lock.RedisLockManager;
 
@@ -40,7 +39,6 @@ public class SyncJobAspect implements EmbeddedValueResolverAware {
 
     final static Logger log = LoggerFactory.getLogger(SyncJobAspect.class);
 
-    @NotNull
     private StringValueResolver resolver;
 
     @Override
