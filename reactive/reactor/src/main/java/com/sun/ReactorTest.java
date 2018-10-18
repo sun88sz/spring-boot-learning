@@ -16,8 +16,12 @@ public class ReactorTest {
 
         Flux<Integer> intFlux = Flux.just(1, 2, 3, 4, 5);
         Flux<String> stringFlux = Flux.just("A", "B", "C", "D", "E");
-        
+
         intFlux.zipWith(stringFlux).subscribe(System.out::println);
+
+
+        intFlux.map(i -> i * 2).subscribe(System.out::print);
+        
 
     }
 }

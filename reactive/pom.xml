@@ -16,6 +16,7 @@
         <module>reactor</module>
         <module>webflux</module>
         <module>vertx</module>
+        <module>threadlocal</module>
     </modules>
 
     <dependencyManagement>
