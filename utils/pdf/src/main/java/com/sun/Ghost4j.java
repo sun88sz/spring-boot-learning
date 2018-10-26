@@ -1,4 +1,4 @@
-package com.sun.example;
+package com.sun;
 
 import java.awt.*;
 import java.awt.image.RenderedImage;

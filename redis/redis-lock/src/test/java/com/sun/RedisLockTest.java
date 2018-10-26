@@ -1,7 +1,10 @@
+package com.sun;
+
 import com.google.common.collect.Lists;
 import com.sun.lock.RedisLock;
 import com.sun.lock.RedisLockManager;
 
+import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +23,7 @@ import java.util.concurrent.TimeUnit;
  * @author Sun
  */
 
+@Slf4j
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest(classes = RedisLockTestApplication.class)
 public class RedisLockTest {
@@ -31,18 +35,36 @@ public class RedisLockTest {
 
 
     @Test
-    public void redisLockTest() {
-        RedisLock redisLock = redisLockManager.getRedisLock("Job:StatsQuality");
+    public void redisLockTest1() throws InterruptedException {
+        RedisLock redisLock = redisLockManager.getRedisLock("AAAA:BBBB");
+        
+        log.info( "1 try lock");
         boolean lock = redisLock.lock(10,30, TimeUnit.SECONDS);
+        log.info( "1 get lock");
+        Thread.sleep(10000);
         if(lock) {
             redisLock.unlock();
+            log.info( "1 unlock lock");
         }
 
-        RedisLock redisLock2 = redisLockManager.getRedisLock("Job:StatsQuality");
-        boolean lock1 = redisLock2.lock(30, TimeUnit.SECONDS);
-
-        redisLock2.unlock();
     }
+
+
+    @Test
+    public void redisLockTest2() {
+        RedisLock redisLock = redisLockManager.getRedisLock("AAAA:BBBB");
+
+        log.info( "2 try lock");
+        boolean lock = redisLock.lock(10,30, TimeUnit.SECONDS);
+        log.info( "2 get lock");
+        if(lock) {
+            redisLock.unlock();
+            log.info( "2 unlock lock");
+        }
+
+    }
+
+
 
     @Test
     public void lockTest() {

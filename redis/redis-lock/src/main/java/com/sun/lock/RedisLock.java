@@ -31,7 +31,7 @@ public class RedisLock {
     /**
      * 等待时间内，线程最多唤醒次数
      */
-    private int times = 10;
+    private int times = 20;
     /**
      * 等待时间内，线程最小唤醒间隔（ms）
      */

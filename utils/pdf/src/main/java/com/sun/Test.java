@@ -1,4 +1,4 @@
-package com.sun.example;
+package com.sun;
 
 import java.io.File;
 import java.io.IOException;
@@ -9,6 +9,10 @@ import org.ghost4j.renderer.RendererException;
 /**
  * @author : Sun
  * @date : 2018/10/19 18:21
+ * 
+ * 
+ * 
+ * 
  */
 public class Test {
 

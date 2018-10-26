@@ -13,7 +13,6 @@
     <packaging>pom</packaging>
     <modules>
         <module>java-stream</module>
-        <module>pdf2html</module>
     </modules>
 
 

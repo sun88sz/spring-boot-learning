@@ -20,7 +20,7 @@ public class ReactorTest {
         intFlux.zipWith(stringFlux).subscribe(System.out::println);
 
 
-        intFlux.map(i -> i * 2).subscribe(System.out::print);
+//        intFlux.map(i -> i * 2).subscribe(System.out::print);
         
 
     }

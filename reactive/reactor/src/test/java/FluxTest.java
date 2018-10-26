@@ -68,10 +68,18 @@ public class FluxTest {
         Flux.just("flux", "mono")
                 .flatMap(s -> Flux.fromArray(s.split("\\s*"))
                         .delayElements(Duration.ofMillis(100)))
-                .doOnNext(System.out::print)
-                .subscribe(System.out::print);
+                .doOnNext(e-> {
+                    try {
+                        Thread.sleep(2000);
+                    } catch (InterruptedException e1) {
+                        e1.printStackTrace();
+                    }
+                })
+                .subscribe(System.out::println);
 
-        countDownLatch.await(1,TimeUnit.SECONDS);
+//        countDownLatch.await(3,TimeUnit.SECONDS);
+
+        System.out.println("end");
     }
 
     @Test
