@@ -18,6 +18,7 @@
         <module>redis</module>
         <module>grpc</module>
         <module>reactive</module>
+        <module>algorithms</module>
     </modules>
 
     <properties>

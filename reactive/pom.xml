@@ -17,6 +17,7 @@
         <module>webflux</module>
         <module>vertx</module>
         <module>threadlocal</module>
+        <module>thread-pool</module>
     </modules>
 
     <dependencyManagement>

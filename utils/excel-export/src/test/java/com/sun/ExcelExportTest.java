@@ -12,7 +12,6 @@ import com.sun.util.ExcelMapping;
 import com.sun.util.ExcelUtil;
 
 import org.apache.commons.lang.time.DateFormatUtils;
-import org.apache.commons.lang.time.DateUtils;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.assertj.core.util.Lists;
@@ -55,16 +54,16 @@ public class ExcelExportTest {
 
         zbr.addChildren(new ExcelMapping("总计划", "plan.allQty", titleStyle, columnStyle, 8).rows(2));
 
-        ExcelMapping jc = new ExcelMapping("检查", titleStyle).rows(1).cols(2);
+        ExcelMapping jc = new ExcelMapping("检查", titleStyle).cols(2);
         jc.addChildren(new ExcelMapping("检查次数", "check.totalQty", titleStyle, columnStyle, 8));
         jc.addChildren(new ExcelMapping("一次检查通过", "check.oncePassQty", titleStyle, columnStyle, 8));
 
-        ExcelMapping jcjg = new ExcelMapping("检查结果", titleStyle).rows(1).cols(3);
+        ExcelMapping jcjg = new ExcelMapping("检查结果", titleStyle).cols(3);
         jcjg.addChildren(new ExcelMapping("通过", "checkResult.passQty", titleStyle, columnStyle, 8));
         jcjg.addChildren(new ExcelMapping("口头警告", "checkResult.warningQty", titleStyle, columnStyle, 8));
         jcjg.addChildren(new ExcelMapping("书面整改", "checkResult.changeQty", titleStyle, columnStyle, 8));
 
-        ExcelMapping zg = new ExcelMapping("整改", titleStyle).rows(1).cols(3);
+        ExcelMapping zg = new ExcelMapping("整改", titleStyle).cols(3);
         zg.addChildren(new ExcelMapping("一次整改通过", "change.oncePassQty", titleStyle, columnStyle, 8));
         zg.addChildren(new ExcelMapping("多次整改", "change.manyTimesQty", titleStyle, columnStyle, 8));
         zg.addChildren(new ExcelMapping("逾期", "change.overdueQty", titleStyle, columnStyle, 8));
