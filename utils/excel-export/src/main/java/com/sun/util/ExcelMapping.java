@@ -340,4 +340,11 @@ public class ExcelMapping {
         return this;
     }
 
+    public ExcelMapping parent(ExcelMapping parent) {
+        if (parent == null) {
+            throw new IllegalArgumentException("父级对象为空");
+        }
+        parent.addChildren(this);
+        return this;
+    }
 }
