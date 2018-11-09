@@ -36,8 +36,7 @@ import org.apache.poi.ss.util.RegionUtil;
 /**
  * Excel 工具类
  *
- * @author Sun
- * @date
+ * @author Sunchenjie
  */
 public class ExcelUtil {
 
@@ -126,7 +125,7 @@ public class ExcelUtil {
             wb.write(os);
             os.flush();
             os.close();
-            
+
             // 清空ThreadLocal
             cellStyleThreadLocal.remove();
         } catch (UnsupportedEncodingException e) {

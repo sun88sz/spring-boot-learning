@@ -13,7 +13,9 @@ import lombok.NoArgsConstructor;
 import org.apache.commons.collections4.CollectionUtils;
 
 /**
- * title 和 字段 映射
+ * Excel 标题 和 字段 映射 / title
+ *
+ * @author Sunchenjie
  */
 @Data
 public class ExcelMapping {
@@ -78,7 +80,7 @@ public class ExcelMapping {
      * 转换函数
      */
     private Function function;
-    
+
 
     /**
      * 添加子集
@@ -101,14 +103,14 @@ public class ExcelMapping {
         }
         if (CollectionUtils.isNotEmpty(mappings)) {
             this.children.addAll(mappings);
-            mappings.stream().forEach(e -> e.setParent(this));
+            mappings.forEach(e -> e.setParent(this));
         }
         return this;
     }
 
 
     public ExcelMapping() {
-       super();
+        super();
     }
 
     public ExcelMapping(String title, String field) {
@@ -150,7 +152,7 @@ public class ExcelMapping {
         this(title, field, titleStyle);
         this.columnStyle = columnStyle;
     }
-    
+
     public ExcelMapping(String title, String field, ExcelColumnCellStyle titleStyle, ExcelColumnCellStyle columnStyle, Integer columnWidth) {
         this(title, field, titleStyle);
         if (columnStyle != null) {

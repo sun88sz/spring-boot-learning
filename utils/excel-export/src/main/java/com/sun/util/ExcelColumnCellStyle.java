@@ -5,8 +5,9 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
- * @author : Sun
- * @date : 2018/8/22 09:49
+ * Excel简单样式类
+ *
+ * @author Sunchenjie
  */
 @NoArgsConstructor
 @Data
@@ -161,10 +162,10 @@ public class ExcelColumnCellStyle implements Cloneable {
 
     /**
      * 特征值
-     * 
+     *
      * @return
      */
-    public String getCharacteristic(){
+    public String getCharacteristic() {
         StringBuffer b = new StringBuffer();
         b.append(columnWidth).append(rowHeight).append(fontSize).append(fontName).append(bold).append(horizontalAlign).append(verticalAlign);
         return b.toString();

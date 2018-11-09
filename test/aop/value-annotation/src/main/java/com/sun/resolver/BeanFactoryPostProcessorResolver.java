@@ -1,0 +1,25 @@
+package com.sun.resolver;
+
+import com.sun.constant.ConstantServiceUtil;
+
+import org.springframework.beans.BeansException;
+import org.springframework.beans.factory.config.BeanFactoryPostProcessor;
+import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
+
+/**
+ * @author : Sun
+ * @date : 2018/11/8 10:33
+ */
+public class BeanFactoryPostProcessorResolver implements BeanFactoryPostProcessor {
+    
+    @Override
+    public void postProcessBeanFactory(ConfigurableListableBeanFactory beanFactory) throws BeansException {
+        beanFactory.getBean(ConstantServiceUtil.class);
+    }
+
+
+    public static void main(String[] args) {
+        int length = "MIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQCNi8kpAiRCuFx+o2ULhxvPbgBsCNLDntJwUaxxbUuCtsGgncebwO2mH6R0fCuTELIm3X2J4yPTk/ODIJHVKGNY7uF75jBNzYFotkR36d0SUFWF9TtfoaXiZzYOO16NDmMC0j9EOCpfEccJ4kUwH48LUL1rZLtqoeRuotGbthpnyxxkotLSkD1KbfMtLUKFHb/2VR+PHc6XYJdfO5zAQBzoYdeYHJCBZ5hvdWcwwKPoSnS/3z5nXa8UBEBCFFHfyL/DYZVAdDDSic4RwFkD8p9HiRVtIerFP492UzTez04Kirzy6Nc4dWIJyVCqr94DfvdhR9/vA2lKUmumT9RudwVFAgMBAAECggEAJ3Ccw41yNxkRxMOYgybJa/n1qiSnPZTChENtrklK8ggkWbG9DbwrO8+zTjXPGnJbgZLTyRj+QZUHFDF+EQvo6r3dHF3edb9eYKPw3gzO6axyuBnFynbLNxOVL1ABn4IzunSE5mhT/huA/1MJ/ke83uVHcmYmBqdHdEBv8VhDcUntIkSKI0pt5OXDeRC42oA7OcAOgGLbhyIZ+5mk1WIy1QkDQnHuJeWZdqJSWe88i0p6xlVPcZhOca7Z5+oy7r/xbRBDwtHBvHTZ7Lpv3D4Zc4PVm++k61PWNE94VEUrs693RMS7RoWJpUa6UNh8ndJjAjw9TEnILYETIRcmDPKjHQKBgQDvfZsuKK5nMzlbz1wd6Ub3aZTLmhls8Aym3nsLJLD0mXEGirmWNZOV5gUO/f/yPNGuxY43mtue6cV4gCoJlbTuvt+HcWMfVtq6f7XhfYVtxKLhGdIKejMDm/qGeNM/obBWQyl1EDGRaO1XZUnvrt7XeHdGe8utm8h/ft1FWWz0twKBgQCXTbWOfO3yMa2R0T8J5kdGd9+EPwSij7078W2AHJM747nYHIZBTfoCniJCWmdxVFf7a6/BdmSmndPLIBQ3Fr3kUlTfkrxi1QS2fZUJM1KhvQgkfLwFNJgVXNp1rm1xIg4aiEUt/T5NnCEw4+YvENRuhNs0S8RrtrVQ9kd2cxUx4wKBgQCrO3malUetTfiy5h4M3N/6wii7MmD/fNru7J+5JfDH0nX3oXR0K7ZsNNxlDcLUZhveBC5dH4Hrq2WfdLOZyspk8WBNLQscOzOEqQ9YPDEMfM2geJ+vEhQrfnivcPBJzMeRxc98famTOByKokcs8jEuilltsdG9PWcrkX+PuBKpHQKBgFVWeySWyg5kfqVUA94th93zFpqcgJy/vdflYAF2HIUW+GcwD3kd5fk7/8609ssw6z7fig3wHOzs79wNh9ladlglJ8HCHYcQ5suXIUxDKkQXPlR2FgZJl83UxVLCwu+gaZwFaB98Snuzp/TPVbEOKQL85DYm1e566uFzRvNEDZxJAoGBAIOQB7pE+D5KEI5b5qKhfYG34FpS/m196bNXc63NbuT5nI4TT1hK0I/SxdAi1b2MTw+nzn75Szu+kdcyWjvNW+1yMMcXKJGh1jAcSnf37AVHxQlM9gMgop3R2rlLB23G6FcPJPPNbPI7RTJNpEq7GQQAc9yQ3NLoYkl+xUtwd7Ag0".length();
+        System.out.println(length);
+    }
+}
