@@ -12,6 +12,7 @@ import lombok.Data;
 public class Node {
 
     Integer name;
+    Integer quantity = 0;
 
     /**
      * 最早开始时间
@@ -39,8 +40,9 @@ public class Node {
     Boolean prev = false;
     Boolean next = false;
 
-    public Node(Integer name) {
+    public Node(Integer name, Integer quantity) {
         this.name = name;
+        this.quantity = quantity;
     }
 
     @Override
