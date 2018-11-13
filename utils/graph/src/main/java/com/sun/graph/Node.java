@@ -30,6 +30,13 @@ public class Node {
      * 最迟完成时间
      */
     Integer lf = Integer.MAX_VALUE;
+
+    /**
+     * 前继至今最大的时间
+     */
+    Integer esMax;
+    Integer efMax;
+    
     /**
      * 总时差
      */
@@ -52,8 +59,12 @@ public class Node {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         Node node = (Node) o;
         return Objects.equals(name, node.name);
     }
