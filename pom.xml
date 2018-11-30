@@ -169,7 +169,7 @@
     <repositories>
         <repository>
             <id>alimaven</id>
-            <name>aliyun maven</name>
+            <id>aliyun maven</id>
             <url>http://maven.aliyun.com/nexus/content/repositories/central/</url>
             <snapshots>
                 <enabled>false</enabled>
@@ -179,7 +179,7 @@
         <!-- 中央仓库1 -->
         <repository>
             <id>repo1</id>
-            <name>repo1</name>
+            <id>repo1</id>
             <url>http://repo1.maven.org/maven2/</url>
             <snapshots>
                 <enabled>false</enabled>
@@ -189,7 +189,7 @@
         <!-- 中央仓库2 -->
         <repository>
             <id>repo2</id>
-            <name>repo2</name>
+            <id>repo2</id>
             <url>http://repo2.maven.org/maven2/</url>
             <snapshots>
                 <enabled>false</enabled>
@@ -199,7 +199,7 @@
         <!-- Spring -->
         <repository>
             <id>spring-milestones</id>
-            <name>Spring Milestones</name>
+            <id>Spring Milestones</id>
             <url>https://repo.spring.io/libs-milestone</url>
             <snapshots>
                 <enabled>false</enabled>

@@ -23,7 +23,7 @@ public class Consumer1 {
 
 //    @RabbitListener(queues = "queue.A")
     @RabbitListener(queuesToDeclare = @Queue(MqDefine.QUEUE_A) )
-//    @RabbitListener(bindings = {@QueueBinding(value = @Queue(value = "queue.A", durable = "true"), exchange = @Exchange(name = "simpleExchange"))})
+//    @RabbitListener(bindings = {@QueueBinding(value = @Queue(value = "queue.A", durable = "true"), exchange = @Exchange(id = "simpleExchange"))})
     public void aa(Channel channel, Message message, User user) throws IOException {
         System.out.println(user);
 

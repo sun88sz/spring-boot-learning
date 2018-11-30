@@ -455,7 +455,7 @@ public class ExcelUtil {
         if (attributes.length == 1) {
             value = getFieldValueByName(fieldNameSequence, o);
         } else {
-            // 根据数组中第一个连接属性名获取连接属性对象，如student.department.name
+            // 根据数组中第一个连接属性名获取连接属性对象，如student.department.id
             Object fieldObj = getFieldValueByName(attributes[0], o);
             if (fieldObj != null) {
                 //截取除第一个属性名之后的路径

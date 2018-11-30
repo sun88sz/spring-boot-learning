@@ -15,6 +15,11 @@ import org.apache.commons.lang.StringUtils;
 public class Line {
 
     /**
+     * 前置节点id
+     */
+    private Long prevNodeId;
+
+    /**
      * 关系
      */
     private List<RelationType> relations;
@@ -29,13 +34,25 @@ public class Line {
     }
 
     /**
-     * @param relations
-     * @return
+     * @param relations 节点间关系
+     * @return 关系line
      */
+    public static Line build(Long prevNodeId, RelationType... relations) {
+        Line line = new Line();
+        line.setPrevNodeId(prevNodeId);
+        if (relations == null || relations.length == 0) {
+            line.setRelations(Lists.newArrayList(relation()));
+        } else {
+            line.setRelations(Lists.newArrayList(relations));
+        }
+        return line;
+    }
+
+
     public static Line build(RelationType... relations) {
         Line line = new Line();
         if (relations == null || relations.length == 0) {
-            line.setRelations(Lists.newArrayList(createRelation()));
+            line.setRelations(Lists.newArrayList(relation()));
         } else {
             line.setRelations(Lists.newArrayList(relations));
         }
@@ -47,7 +64,7 @@ public class Line {
      *
      * @return
      */
-    public static RelationType createRelation() {
+    public static RelationType relation() {
         return new RelationType();
     }
 
@@ -57,7 +74,7 @@ public class Line {
      * @param type
      * @return
      */
-    public static RelationType createRelation(String type) {
+    public static RelationType relation(String type) {
         return new RelationType(type);
     }
 
@@ -68,12 +85,12 @@ public class Line {
      * @param delay
      * @return
      */
-    public static RelationType createRelation(String type, Integer delay) {
+    public static RelationType relation(String type, Integer delay) {
         return new RelationType(type, delay);
     }
 
     @Data
-    static class RelationType {
+    public static class RelationType {
         /**
          * FF FS SF SS
          * 完成对开始(FS)：后续活动的开始要等到先行活动的完成。

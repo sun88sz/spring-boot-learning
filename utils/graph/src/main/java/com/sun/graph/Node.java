@@ -1,5 +1,8 @@
 package com.sun.graph;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Objects;
 
 import lombok.Data;
@@ -11,50 +14,91 @@ import lombok.Data;
 @Data
 public class Node {
 
-    Integer name;
-    Integer quantity = 0;
+    /**
+     *
+     */
+    private Long id;
+    /**
+     * 开始日期
+     */
+    private Date beginDate;
+
+    /**
+     * 最小开始时间
+     */
+    private Double minBetweenDays;
+    /**
+     * 工期
+     */
+    private Double duration;
 
     /**
      * 最早开始时间
      */
-    Integer es = Integer.MIN_VALUE;
+    private Double es = -1d;
     /**
      * 最早完成时间
      */
-    Integer ef = Integer.MIN_VALUE;
+    private Double ef = -1d;
     /**
      * 最迟开始时间
      */
-    Integer ls = Integer.MAX_VALUE;
+    private Double ls = 999999d;
     /**
      * 最迟完成时间
      */
-    Integer lf = Integer.MAX_VALUE;
+    private Double lf = 999999d;
 
     /**
      * 前继至今最大的时间
      */
-    Integer esMax;
-    Integer efMax;
-    
+    private Double esMax;
+    private Double efMax;
+
     /**
      * 总时差
      */
-    Integer tf = null;
+    private Double tf = null;
     /**
      *
      */
-    Boolean prev = false;
-    Boolean next = false;
+    private Boolean prev = false;
+    private Boolean next = false;
 
-    public Node(Integer name, Integer quantity) {
-        this.name = name;
-        this.quantity = quantity;
+    static SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+
+    public Node(Long id, Double duration) {
+        this.id = id;
+        this.duration = duration;
+    }
+
+    public Node(Long id, Integer duration) {
+        this(id, Double.valueOf(duration));
+    }
+
+    public Node(Long id, String beginDate, Integer duration) {
+        this(id, beginDate, (double) duration);
+    }
+
+    public Node(Long id, String beginDate, Double duration) {
+        this.id = id;
+        try {
+            this.beginDate = sdf.parse(beginDate);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        this.duration = duration;
+    }
+
+    public Node(Long id, Date beginDate, Double duration) {
+        this.id = id;
+        this.beginDate = beginDate;
+        this.duration = duration;
     }
 
     @Override
     public String toString() {
-        return name.toString() + " : " + es + " " + ef + " " + ls + " " + lf + " " + String.valueOf(tf);
+        return id.toString() + " : " + es + " " + ef + " " + ls + " " + lf + " " + String.valueOf(tf);
     }
 
     @Override
@@ -66,11 +110,11 @@ public class Node {
             return false;
         }
         Node node = (Node) o;
-        return Objects.equals(name, node.name);
+        return Objects.equals(id, node.id);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name);
+        return Objects.hash(id);
     }
 }

@@ -24,11 +24,11 @@ public final class CompanyProto {
     int getId();
 
     /**
-     * <code>string name = 2;</code>
+     * <code>string id = 2;</code>
      */
     String getName();
     /**
-     * <code>string name = 2;</code>
+     * <code>string id = 2;</code>
      */
     com.google.protobuf.ByteString
         getNameBytes();
@@ -146,7 +146,7 @@ public final class CompanyProto {
     public static final int NAME_FIELD_NUMBER = 2;
     private volatile Object name_;
     /**
-     * <code>string name = 2;</code>
+     * <code>string id = 2;</code>
      */
     public String getName() {
       Object ref = name_;
@@ -161,7 +161,7 @@ public final class CompanyProto {
       }
     }
     /**
-     * <code>string name = 2;</code>
+     * <code>string id = 2;</code>
      */
     public com.google.protobuf.ByteString
         getNameBytes() {
@@ -576,7 +576,7 @@ public final class CompanyProto {
 
       private Object name_ = "";
       /**
-       * <code>string name = 2;</code>
+       * <code>string id = 2;</code>
        */
       public String getName() {
         Object ref = name_;
@@ -591,7 +591,7 @@ public final class CompanyProto {
         }
       }
       /**
-       * <code>string name = 2;</code>
+       * <code>string id = 2;</code>
        */
       public com.google.protobuf.ByteString
           getNameBytes() {
@@ -607,7 +607,7 @@ public final class CompanyProto {
         }
       }
       /**
-       * <code>string name = 2;</code>
+       * <code>string id = 2;</code>
        */
       public Builder setName(
           String value) {
@@ -620,7 +620,7 @@ public final class CompanyProto {
         return this;
       }
       /**
-       * <code>string name = 2;</code>
+       * <code>string id = 2;</code>
        */
       public Builder clearName() {
         
@@ -629,7 +629,7 @@ public final class CompanyProto {
         return this;
       }
       /**
-       * <code>string name = 2;</code>
+       * <code>string id = 2;</code>
        */
       public Builder setNameBytes(
           com.google.protobuf.ByteString value) {

@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class UserService {
     
-    @Value("${name}")
+    @Value("${id}")
     private String name;
     
     @Value("${age}")
