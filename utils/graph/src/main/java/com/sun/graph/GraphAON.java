@@ -3,7 +3,7 @@ package com.sun.graph;
 import com.google.common.collect.Maps;
 import com.google.common.graph.MutableValueGraph;
 import com.google.common.graph.ValueGraphBuilder;
-import com.sun.GetWorkDay;
+import com.sun.WorkDayUtil;
 
 import org.apache.commons.collections4.CollectionUtils;
 
@@ -72,10 +72,10 @@ public class GraphAON {
         if (includeDate && node.getBeginDate() == null) {
             throw new IllegalArgumentException("node [" + node.getId() + "] 节点开始时间必填");
         }
-        // 检查开始时间点
-        if (includeDate && !includeWeekend) {
-            node.setBeginDate(GetWorkDay.nextWorkDay(node.getBeginDate()));
-        }
+//        // 检查开始时间点
+//        if (includeDate && !includeWeekend) {
+//            node.setBeginDate(WorkDayUtil.nextWorkDay(node.getBeginDate()));
+//        }
 
         Node exist = nodeMap.get(node.getId());
         if (exist == null) {
@@ -209,9 +209,9 @@ public class GraphAON {
                     n -> {
                         double v;
                         if (includeWeekend) {
-                            v = GetWorkDay.betweenDaysOfDigit(startDate, n.getBeginDate(), 1);
+                            v = WorkDayUtil.betweenDaysOfDigit(startDate, n.getBeginDate(), 1);
                         } else {
-                            v = GetWorkDay.betweenDaysOfDigitExcludeWeekend(startDate, n.getBeginDate(), 1);
+                            v = WorkDayUtil.betweenDaysOfDigitExcludeWeekend(startDate, n.getBeginDate(), 1);
                         }
                         n.setMinBetweenDays(v);
                     }

@@ -9,9 +9,9 @@ import java.util.Date;
 
 
 /**
- *
+ * 工作日计算工具类
  */
-public class GetWorkDay {
+public class WorkDayUtil {
 
     /**
      * @param startTime
@@ -37,9 +37,9 @@ public class GetWorkDay {
         Date endMondayHead = getPrevMondayHead(endWorkDay);
 
         // 此处一定可以余7一定=0
-        double times = (endMondayHead.getTime() - startFridayTail.getTime() - 2) / 7.0 / 1000 * 5;
+        double times = (endMondayHead.getTime() - startFridayTail.getTime() - 86400000 * 2) / 7.0 * 5;
 
-        return times + (startFridayTail.getTime() - startWorkDay.getTime()) / 1000 + (endWorkDay.getTime() - endMondayHead.getTime()) / 1000;
+        return (times + (startFridayTail.getTime() - startWorkDay.getTime()) + (endWorkDay.getTime() - endMondayHead.getTime())) / 1000;
     }
 
     /**
@@ -89,15 +89,14 @@ public class GetWorkDay {
      * @param date
      * @return
      */
-    private static Date getNextFridayTail(Date date) {
+    public static Date getNextFridayTail(Date date) {
         Calendar cal = Calendar.getInstance();
         cal.setTime(date);
-        int between = 9 - cal.get(Calendar.DAY_OF_WEEK);
-        // 周日的情况
-        if (between == 8) {
-            between = 1;
+
+        int between = Calendar.SATURDAY - cal.get(Calendar.DAY_OF_WEEK);
+        if (between != 0) {
+            cal.add(Calendar.DATE, between);
         }
-        cal.add(Calendar.DATE, between);
         cal.set(Calendar.HOUR_OF_DAY, 0);
         cal.set(Calendar.MINUTE, 0);
         cal.set(Calendar.SECOND, 0);
@@ -110,9 +109,14 @@ public class GetWorkDay {
      *
      * @return
      */
-    private static Date getPrevMondayHead(Date date) {
+    public static Date getPrevMondayHead(Date date) {
         Calendar cal = Calendar.getInstance();
         cal.setTime(date);
+
+        int between = cal.get(Calendar.DAY_OF_WEEK) - Calendar.MONDAY;
+        if (between != 0) {
+            cal.add(Calendar.DATE, -between);
+        }
         cal.set(Calendar.HOUR_OF_DAY, 0);
         cal.set(Calendar.MINUTE, 0);
         cal.set(Calendar.SECOND, 0);
@@ -165,23 +169,5 @@ public class GetWorkDay {
         between = between.setScale(digit, RoundingMode.HALF_UP);
         return between.doubleValue();
     }
-
-
-    public static void main(String[] args) throws ParseException {
-
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH");
-
-        Date beginTime = sdf.parse("2018-11-25 00");
-        Date endTime = sdf.parse("2018-12-01 00");
-        
-        Calendar instance = Calendar.getInstance();
-        instance.setTime(beginTime);
-        int i = instance.get(Calendar.DAY_OF_WEEK);
-
-        double days = getWorkdayTimeInSecs(beginTime, endTime) / 1000.0 / 24 / 3600;
-
-        System.out.println(days);
-    }
-
 
 }
