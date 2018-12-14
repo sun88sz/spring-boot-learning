@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.Objects;
 
 import lombok.Data;
+import org.apache.commons.lang.time.DateFormatUtils;
 
 /**
  * @author : Sun
@@ -65,7 +66,9 @@ public class Node {
     private Boolean prev = false;
     private Boolean next = false;
 
-    static SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+    static SimpleDateFormat daySdf = new SimpleDateFormat("yyyy-MM-dd");
+    static SimpleDateFormat timeSdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
 
     public Node(Long id, Double duration) {
         this.id = id;
@@ -83,7 +86,13 @@ public class Node {
     public Node(Long id, String beginDate, Double duration) {
         this.id = id;
         try {
-            this.beginDate = sdf.parse(beginDate);
+            Date workBeginDate;
+            if (beginDate.indexOf(' ') > 0) {
+                workBeginDate = timeSdf.parse(beginDate);
+            } else {
+                workBeginDate = daySdf.parse(beginDate);
+            }
+            this.beginDate = workBeginDate;
         } catch (ParseException e) {
             e.printStackTrace();
         }
@@ -98,7 +107,17 @@ public class Node {
 
     @Override
     public String toString() {
-        return id.toString() + " : " + es + " " + ef + " " + ls + " " + lf + " " + String.valueOf(tf);
+        StringBuilder sb = new StringBuilder();
+        sb.append(id)
+                .append(" : ")
+                .append(String.format("%20s",DateFormatUtils.format(beginDate, "yyyy-MM-dd HH:mm:ss") ))
+                .append(String.format("%10s",duration))
+                .append(String.format("%10s",es))
+                .append(String.format("%10s",ef))
+                .append(String.format("%10s",ls))
+                .append(String.format("%10s",lf))
+                .append(String.format("%10s",tf));
+        return sb.toString();
     }
 
     @Override

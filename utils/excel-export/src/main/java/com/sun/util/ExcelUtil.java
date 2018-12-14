@@ -31,14 +31,17 @@ import org.apache.poi.ss.usermodel.HorizontalAlignment;
 import org.apache.poi.ss.usermodel.VerticalAlignment;
 import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.ss.util.RegionUtil;
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
- * Excel 工具类
+ * Excel 导出工具类
  *
  * @author Sunchenjie
  */
 public class ExcelUtil {
+
+    private static Logger logger = LoggerFactory.getLogger(ExcelUtil.class);
 
     private static ThreadLocal<Map<String, Integer>> cellStyleThreadLocal = new ThreadLocal<>();
 
@@ -175,9 +178,6 @@ public class ExcelUtil {
         //在Workbook中，创建一个sheet，对应Excel中的工作薄（sheet）
         HSSFSheet sheet = book.createSheet(sheetName);
 
-        if (CollectionUtils.isEmpty(list)) {
-            return null;
-        }
         if (CollectionUtils.isEmpty(mappings)) {
             return null;
         }
@@ -194,7 +194,9 @@ public class ExcelUtil {
             //  添加表头
             drawTitle(book, sheet, titleMapping);
             // 添加内容
-            drawContent(book, sheet, titleMapping, list);
+            if (CollectionUtils.isNotEmpty(list)) {
+                drawContent(book, sheet, titleMapping, list);
+            }
             // 设置列宽
             setColumnWidth(sheet, titleMapping);
         } catch (Exception e) {
@@ -282,21 +284,19 @@ public class ExcelUtil {
             // 起始行, 终止行, 起始列, 终止列
             CellRangeAddress cra = new CellRangeAddress(current.getFirstRow(), current.getLastRow(), current.getFirstCol(), current.getLastCol());
             sheet.addMergedRegion(cra);
-
-            HSSFRow row = getOrCreateRow(sheet, current.getFirstRow());
-
-            HSSFCell cell = row.createCell(current.getFirstCol());
-            // 设置style
-            if (current.getTitleStyle() != null) {
-                HSSFCellStyle style = createStyle(book, current.getTitleStyle());
-                cell.setCellStyle(style);
-            }
-            // 设置内容
-            if (current.getContent() != null) {
-                defaultConvertSet(cell, current.getContent());
-            }
         }
+        HSSFRow row = getOrCreateRow(sheet, current.getFirstRow());
 
+        HSSFCell cell = row.createCell(current.getFirstCol());
+        // 设置style
+        if (current.getTitleStyle() != null) {
+            HSSFCellStyle style = createStyle(book, current.getTitleStyle());
+            cell.setCellStyle(style);
+        }
+        // 设置内容
+        if (current.getContent() != null) {
+            defaultConvertSet(cell, current.getContent());
+        }
     }
 
     /**
@@ -455,7 +455,7 @@ public class ExcelUtil {
         if (attributes.length == 1) {
             value = getFieldValueByName(fieldNameSequence, o);
         } else {
-            // 根据数组中第一个连接属性名获取连接属性对象，如student.department.id
+            // 根据数组中第一个连接属性名获取连接属性对象，如student.department.name
             Object fieldObj = getFieldValueByName(attributes[0], o);
             if (fieldObj != null) {
                 //截取除第一个属性名之后的路径
@@ -665,5 +665,4 @@ public class ExcelUtil {
         cell.setCellValue(fieldValue);
         return fieldValue;
     }
-
 }

@@ -108,9 +108,11 @@ public class ExcelMapping {
         return this;
     }
 
-
     public ExcelMapping() {
-        super();
+    }
+    
+    public ExcelMapping(String content) {
+        this.content = content;
     }
 
     public ExcelMapping(String title, String field) {
@@ -124,10 +126,6 @@ public class ExcelMapping {
         this.titleStyle = new ExcelColumnCellStyle(columnWidth);
     }
 
-    public ExcelMapping(String content, ExcelColumnCellStyle titleStyle) {
-        this.content = content;
-        this.titleStyle = titleStyle;
-    }
 
     public ExcelMapping(String title, String field, ExcelColumnCellStyle titleStyle) {
         this.title = title;
@@ -147,11 +145,6 @@ public class ExcelMapping {
         }
     }
 
-
-    public ExcelMapping(String title, String field, ExcelColumnCellStyle titleStyle, ExcelColumnCellStyle columnStyle) {
-        this(title, field, titleStyle);
-        this.columnStyle = columnStyle;
-    }
 
     public ExcelMapping(String title, String field, ExcelColumnCellStyle titleStyle, ExcelColumnCellStyle columnStyle, Integer columnWidth) {
         this(title, field, titleStyle);

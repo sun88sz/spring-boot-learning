@@ -37,7 +37,7 @@ public class GraphTest {
         graphAON.addNode(new Node(1L, "2018-11-27", 0));
         graphAON.addNode(new Node(2L, "2018-12-01", 0.5 ), Line.build(1L, relation()));
         graphAON.addNode(new Node(3L, "2018-11-28", 3 ), Line.build(1L, relation()));
-        graphAON.addNode(new Node(4L, "2018-12-03", 4 ), Line.build(2L, relation()), Line.build(3L, relation()));
+        graphAON.addNode(new Node(4L, "2018-12-03 12:00:00", 4 ), Line.build(2L, relation()), Line.build(3L, relation()));
         graphAON.addNode(new Node(5L, "2018-12-07", 1.5), Line.build(4L, relation()));
 
         return graphAON;

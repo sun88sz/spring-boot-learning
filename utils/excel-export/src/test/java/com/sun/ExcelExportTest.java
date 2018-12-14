@@ -1,6 +1,6 @@
 package com.sun;
 
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -48,36 +48,40 @@ public class ExcelExportTest {
         head.addChildren(rq);
 
         // 自动的序号列
-        zbr.addChildren(new ExcelMapping().title("序号").field(ExcelMapping.AUTO_INDEX).titleStyle(titleStyle).columnStyle(columnStyle).columnWidth(4).rows(2).cols(1));
+        ExcelMapping xhRow = new ExcelMapping().title("序号").field(ExcelMapping.AUTO_INDEX).titleStyle(titleStyle).columnStyle(columnStyle).columnWidth(4).rows(2).cols(1);
+        zbr.addChildren(xhRow);
         zbr.addChildren(new ExcelMapping("项目", "project.projectName", titleStyle, columnStyle, 16).rows(2));
 //        zbr.addChildren(new ExcelMapping("项目时间", "project.createTime", titleStyle, columnStyle, 16).rows(2).function(e->DateFormatUtils.format((Date) e,"yyyy-MM-dd")));
 
         zbr.addChildren(new ExcelMapping("总计划", "plan.allQty", titleStyle, columnStyle, 8).rows(2));
 
-        ExcelMapping jc = new ExcelMapping("检查", titleStyle).cols(2);
+        ExcelMapping jc = new ExcelMapping("检查").titleStyle(titleStyle).cols(2);
         jc.addChildren(new ExcelMapping("检查次数", "check.totalQty", titleStyle, columnStyle, 8));
         jc.addChildren(new ExcelMapping("一次检查通过", "check.oncePassQty", titleStyle, columnStyle, 8));
 
-        ExcelMapping jcjg = new ExcelMapping("检查结果", titleStyle).cols(3);
+        ExcelMapping jcjg = new ExcelMapping("检查结果").titleStyle(titleStyle).cols(3);
         jcjg.addChildren(new ExcelMapping("通过", "checkResult.passQty", titleStyle, columnStyle, 8));
         jcjg.addChildren(new ExcelMapping("口头警告", "checkResult.warningQty", titleStyle, columnStyle, 8));
         jcjg.addChildren(new ExcelMapping("书面整改", "checkResult.changeQty", titleStyle, columnStyle, 8));
 
-        ExcelMapping zg = new ExcelMapping("整改", titleStyle).cols(3);
+        ExcelMapping zg = new ExcelMapping("整改").titleStyle(titleStyle).cols(3);
         zg.addChildren(new ExcelMapping("一次整改通过", "change.oncePassQty", titleStyle, columnStyle, 8));
         zg.addChildren(new ExcelMapping("多次整改", "change.manyTimesQty", titleStyle, columnStyle, 8));
         zg.addChildren(new ExcelMapping("逾期", "change.overdueQty", titleStyle, columnStyle, 8));
 
         zbr.addChildren(jc, jcjg, zg);
-        
+
+
+        new ExcelMapping().title("备注").titleStyle(headerStyle).cols(6).parent(xhRow);
+
         List<QSDomain> records = createRecords();
-        HSSFSheet sheet = ExcelUtil.createSheet(book, sheetName, records, Arrays.asList(head));
+        HSSFSheet sheet = ExcelUtil.createSheet(book, sheetName, records, Collections.singletonList(head));
 
         ExcelUtil.addCellBorder(sheet, 3, 3 + records.size() + 1, 0, 10, 2);
-        
-        ExcelUtil.writeLocalFile(book,"D:/");
+
+        ExcelUtil.writeLocalFile(book, "D:/");
     }
-    
+
     private List<QSDomain> createRecords() {
         QSDomain qsDomain = new QSDomain();
         qsDomain.setProject(new Project(1l, "项目1", new Date()));

@@ -10,6 +10,8 @@ import java.util.Date;
 
 /**
  * 工作日计算工具类
+ * 
+ * @author Sun
  */
 public class WorkDayUtil {
 
@@ -49,7 +51,7 @@ public class WorkDayUtil {
      *
      * @return
      */
-    private static Date getNextWorkDay(Date date) {
+    public static Date getNextWorkDay(Date date) {
         Calendar cal = Calendar.getInstance();
         cal.setTime(date);
 
@@ -69,7 +71,7 @@ public class WorkDayUtil {
      *
      * @return
      */
-    private static Date getPrevWorkDay(Date date) {
+    public static Date getPrevWorkDay(Date date) {
         Calendar cal = Calendar.getInstance();
         cal.setTime(date);
 

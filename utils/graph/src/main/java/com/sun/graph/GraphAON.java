@@ -72,10 +72,10 @@ public class GraphAON {
         if (includeDate && node.getBeginDate() == null) {
             throw new IllegalArgumentException("node [" + node.getId() + "] 节点开始时间必填");
         }
-//        // 检查开始时间点
-//        if (includeDate && !includeWeekend) {
-//            node.setBeginDate(WorkDayUtil.nextWorkDay(node.getBeginDate()));
-//        }
+        // 检查开始时间点
+        if (includeDate && !includeWeekend) {
+            node.setBeginDate(WorkDayUtil.getNextWorkDay(node.getBeginDate()));
+        }
 
         Node exist = nodeMap.get(node.getId());
         if (exist == null) {
