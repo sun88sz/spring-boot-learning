@@ -18,6 +18,7 @@
         <module>vertx</module>
         <module>threadlocal</module>
         <module>thread-pool</module>
+        <module>founctional</module>
     </modules>
 
     <dependencyManagement>

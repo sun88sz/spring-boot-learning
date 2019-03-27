@@ -1,12 +1,12 @@
 package com.sun.graph;
 
+import lombok.Data;
+import org.apache.commons.lang3.time.DateFormatUtils;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Objects;
-
-import lombok.Data;
-import org.apache.commons.lang.time.DateFormatUtils;
 
 /**
  * @author : Sun
@@ -110,7 +110,7 @@ public class Node {
         StringBuilder sb = new StringBuilder();
         sb.append(id)
                 .append(" : ")
-                .append(String.format("%20s",DateFormatUtils.format(beginDate, "yyyy-MM-dd HH:mm:ss") ))
+                .append(String.format("%20s", DateFormatUtils.format(beginDate, "yyyy-MM-dd HH:mm:ss") ))
                 .append(String.format("%10s",duration))
                 .append(String.format("%10s",es))
                 .append(String.format("%10s",ef))
