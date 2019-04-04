@@ -3,17 +3,21 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <artifactId>spring-boot-learning</artifactId>
+        <artifactId>rabbit-mq</artifactId>
         <groupId>com.sun</groupId>
         <version>1.0-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>mq</artifactId>
+    <artifactId>rabbit-retry</artifactId>
     <packaging>pom</packaging>
-    <modules>
-        <module>rabbit-mq</module>
-    </modules>
 
+    <modules>
+        <module>rabbit-consumer</module>
+        <module>rabbit-producer</module>
+        <module>rabbit-producer-base</module>
+        <module>rabbit-service-api</module>
+        <module>rabbit-consumer-aspect</module>
+    </modules>
 
 </project>
