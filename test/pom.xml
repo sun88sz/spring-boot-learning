@@ -15,6 +15,7 @@
         <module>java-stream</module>
         <module>aop</module>
         <module>rollback-only</module>
+        <module>localdatetime</module>
     </modules>
 
 

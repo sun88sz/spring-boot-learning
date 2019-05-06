@@ -1,0 +1,5 @@
+server:
+  port: 9999 #默认不同的APP使用不同的端口
+spring:
+  application:
+    name: aaa

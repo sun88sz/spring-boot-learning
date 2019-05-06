@@ -2,7 +2,7 @@ server:
   port: 8888 #默认不同的APP使用不同的端口
 spring:
   application:
-    name: rollback-test
+    name: @project.name@
   datasource:
     url: jdbc:mysql://127.0.0.1:3306/test?useUnicode=true&amp;characterEncoding=utf-8&amp;useSSL=false
     type: com.zaxxer.hikari.HikariDataSource
