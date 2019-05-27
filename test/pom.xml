@@ -17,6 +17,7 @@
         <module>rollback-only</module>
         <module>localdatetime</module>
         <module>_test</module>
+        <module>expression-evaluator</module>
     </modules>
 
 

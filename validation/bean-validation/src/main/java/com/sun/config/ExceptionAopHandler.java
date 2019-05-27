@@ -28,7 +28,6 @@ public class ExceptionAopHandler {
             message.append(fieldError.getDefaultMessage());
             message.append("\r\n");
         }
-        System.out.println(message);
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(message.toString());
     }
 }
