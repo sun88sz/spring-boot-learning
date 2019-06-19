@@ -91,6 +91,14 @@
 
     <dependencyManagement>
         <dependencies>
+            <!-- Spring Boot 依赖 -->
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-dependencies</artifactId>
+                <version>${spring-boot.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
 
             <dependency>
                 <groupId>org.apache.commons</groupId>
@@ -208,13 +216,13 @@
                 <version>2.0.1</version>
             </dependency>
 
+            <!-- json -->
             <dependency>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-starter-parent</artifactId>
-                <version>${spring-boot.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
+                <groupId>com.alibaba</groupId>
+                <artifactId>fastjson</artifactId>
+                <version>1.2.49</version>
             </dependency>
+
 
             <dependency>
                 <groupId>org.mybatis.spring.boot</groupId>

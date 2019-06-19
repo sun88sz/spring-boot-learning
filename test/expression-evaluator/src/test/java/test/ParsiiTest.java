@@ -35,8 +35,18 @@ public class ParsiiTest {
     @Test
     public void mainxxx() throws ParseException {
 
+
+
         Scope scope = Scope.create();
-        Expression expr = Parser.parse("a + (b - c) * 10 * d^(e) + sin(f)", scope);
+
+
+
+        Expression expr = Parser.parse("a + (b - c) * 10 * d^e + sin(f)", scope);
+
+        Expression simplify = expr.simplify();
+        System.out.println(simplify);
+
+
         Variable a = scope.getVariable("a");
         Variable b = scope.getVariable("b");
         Variable c = scope.getVariable("c");
@@ -52,6 +62,24 @@ public class ParsiiTest {
         f.setValue(30 * Math.PI / 180);
         //        1+3*10*8+1/2 = 241.5
 
+
+
+
         System.out.println(expr.evaluate());
     }
+
+    @Test
+    public void mainxxxcccc() throws ParseException {
+
+        Scope scope = Scope.create();
+
+        try {
+            Expression expr = Parser.parse("1/6 + 1/6 + a", scope);
+        }catch (ParseException e){
+            System.out.println(e);
+        }
+
+
+    }
+
 }

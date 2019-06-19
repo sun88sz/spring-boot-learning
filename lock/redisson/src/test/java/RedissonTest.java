@@ -1,4 +1,6 @@
-import com.sun.RedissonApplication;
+import com.sun.redisson.RedissonApplication;
+import com.sun.redisson.example.LockExampleService;
+import com.sun.redisson.example.LockParameter;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.redisson.api.RLock;
@@ -20,13 +22,25 @@ public class RedissonTest {
     @Autowired
     private RedissonClient redissonClient;
 
-
     @Test
     public void lock() throws InterruptedException {
         RLock lock = redissonClient.getLock("xxxx");
         boolean b = lock.tryLock(10, TimeUnit.SECONDS);
 
         System.out.println(b);
+    }
+
+
+    @Autowired
+    private LockExampleService lockExampleService;
+
+    @Test
+    public void testAspect() {
+        LockParameter parameter = new LockParameter();
+        parameter.setId(1L);
+        parameter.setName("xxxxxxxxx");
+
+        lockExampleService.doing(parameter);
     }
 
 }

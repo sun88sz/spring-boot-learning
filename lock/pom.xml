@@ -17,4 +17,5 @@
         <module>redis-lock</module>
         <module>integration-lock</module>
     </modules>
+
 </project>

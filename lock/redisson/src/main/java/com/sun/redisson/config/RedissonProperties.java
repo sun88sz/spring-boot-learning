@@ -1,4 +1,4 @@
-package com.sun.redisson;
+package com.sun.redisson.config;
 
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
