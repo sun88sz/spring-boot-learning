@@ -1,5 +1,6 @@
 package com.sun.lock;
 
+import com.google.common.collect.Lists;
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.data.redis.connection.RedisConnection;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -8,8 +9,6 @@ import org.springframework.data.redis.core.script.DefaultRedisScript;
 import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
-
-import com.google.common.collect.Lists;
 
 
 /**

@@ -1,6 +1,6 @@
 package com.sun.controller;
 
-import com.sun.bean.Employee;
+import com.sun.bean.Company;
 import com.sun.bean.validate.CreateGroup;
 import com.sun.bean.validate.UpdateGroup;
 import lombok.extern.slf4j.Slf4j;
@@ -14,18 +14,17 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 
 @Slf4j
 @Controller
-@RequestMapping("/emp")
-public class EmployeeController {
+@RequestMapping("/com")
+public class CompanyController {
 
     @ResponseStatus(HttpStatus.CREATED)
     @RequestMapping("/save")
-    public ResponseEntity save(@Validated(CreateGroup.class) @RequestBody Employee employee) {
-        return ResponseEntity.ok().body(employee);
+    public ResponseEntity save(@Validated(CreateGroup.class) @RequestBody Company company) {
+        return ResponseEntity.ok().body(company);
     }
 
-
     @RequestMapping("/update")
-    public ResponseEntity update(@Validated(UpdateGroup.class) @RequestBody Employee employee) {
-        return ResponseEntity.ok().body(employee);
+    public ResponseEntity update(@Validated(UpdateGroup.class) @RequestBody Company company) {
+        return ResponseEntity.ok().body(company);
     }
 }
