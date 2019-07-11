@@ -21,6 +21,7 @@
         <module>algorithms</module>
         <module>validation</module>
         <module>lock</module>
+        <module>file</module>
     </modules>
 
     <properties>
@@ -183,12 +184,12 @@
             <dependency>
                 <groupId>org.apache.poi</groupId>
                 <artifactId>poi</artifactId>
-                <version>3.17</version>
+                <version>4.1.0</version>
             </dependency>
             <dependency>
                 <groupId>org.apache.poi</groupId>
                 <artifactId>poi-ooxml</artifactId>
-                <version>3.17</version>
+                <version>4.1.0</version>
             </dependency>
 
             <dependency>
@@ -230,6 +231,12 @@
                 <version>1.2.49</version>
             </dependency>
 
+            <!-- mimio -->
+            <dependency>
+                <groupId>io.minio</groupId>
+                <artifactId>minio</artifactId>
+                <version>6.0.8</version>
+            </dependency>
 
         </dependencies>
     </dependencyManagement>

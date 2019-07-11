@@ -1,0 +1,16 @@
+server:
+  port: 6060
+---
+spring:
+  session:
+    store-type: redis
+  jackson:
+    default-property-inclusion: non_null
+  profiles:
+  application:
+    name: #{project.artifactId}
+minio:
+  url: http://127.0.0.1:9000
+  accessKey: H0A84S9Z31QXX4UD4WW7
+  secretKey: 0VdXK35Lx+C9BJpoyr6sPpHQm0UD0guHwbuA+KTh
+
