@@ -1,4 +1,4 @@
-package sun.service;
+package com.sun.service;
 
 import io.minio.MinioClient;
 import io.minio.ObjectStat;
