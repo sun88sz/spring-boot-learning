@@ -1,24 +1,23 @@
 package com.sun.poi.event;
 
-import java.io.IOException;  
-import java.io.InputStream;  
-import java.util.LinkedList;  
-import java.util.List;  
-  
-import javax.xml.parsers.ParserConfigurationException;  
-  
-import org.apache.poi.openxml4j.opc.OPCPackage;  
-import org.apache.poi.openxml4j.opc.PackageAccess;  
-import org.apache.poi.util.SAXHelper;  
-import org.apache.poi.xssf.eventusermodel.ReadOnlySharedStringsTable;  
-import org.apache.poi.xssf.eventusermodel.XSSFReader;  
-import org.apache.poi.xssf.eventusermodel.XSSFSheetXMLHandler;  
-import org.apache.poi.xssf.eventusermodel.XSSFSheetXMLHandler.SheetContentsHandler;  
-import org.apache.poi.xssf.model.StylesTable;  
-import org.apache.poi.xssf.usermodel.XSSFComment;  
-import org.xml.sax.InputSource;  
-import org.xml.sax.SAXException;  
-import org.xml.sax.XMLReader;  
+import org.apache.poi.ooxml.util.SAXHelper;
+import org.apache.poi.openxml4j.opc.OPCPackage;
+import org.apache.poi.openxml4j.opc.PackageAccess;
+import org.apache.poi.xssf.eventusermodel.ReadOnlySharedStringsTable;
+import org.apache.poi.xssf.eventusermodel.XSSFReader;
+import org.apache.poi.xssf.eventusermodel.XSSFSheetXMLHandler;
+import org.apache.poi.xssf.eventusermodel.XSSFSheetXMLHandler.SheetContentsHandler;
+import org.apache.poi.xssf.model.StylesTable;
+import org.apache.poi.xssf.usermodel.XSSFComment;
+import org.xml.sax.InputSource;
+import org.xml.sax.SAXException;
+import org.xml.sax.XMLReader;
+
+import javax.xml.parsers.ParserConfigurationException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.LinkedList;
+import java.util.List;
   
 public class ExcelEventParser {  
   
@@ -68,7 +67,7 @@ public class ExcelEventParser {
     }  
       
     private void processSheet(StylesTable styles, ReadOnlySharedStringsTable strings, InputStream sheetInputStream) throws SAXException, ParserConfigurationException, IOException{  
-        XMLReader sheetParser = SAXHelper.newXMLReader();   
+        XMLReader sheetParser = SAXHelper.newXMLReader();
           
         if(handler != null){  
             sheetParser.setContentHandler(new XSSFSheetXMLHandler(styles, strings, handler, false));  
