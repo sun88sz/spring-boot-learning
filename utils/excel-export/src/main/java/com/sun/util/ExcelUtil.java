@@ -6,6 +6,7 @@ import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.time.DateFormatUtils;
 import org.apache.poi.hssf.usermodel.*;
+import org.apache.poi.ss.usermodel.BorderStyle;
 import org.apache.poi.ss.usermodel.HorizontalAlignment;
 import org.apache.poi.ss.usermodel.VerticalAlignment;
 import org.apache.poi.ss.util.CellRangeAddress;
@@ -42,20 +43,16 @@ public class ExcelUtil {
      * @param firstCol
      * @param lastCol
      */
-    public static void addCellBorder(HSSFSheet sheet, int firstRow, int lastRow, int firstCol, int lastCol, int borderWeight) {
-        if (borderWeight == 0) {
-            borderWeight = 1;
-        }
+    public static void addCellBorder(HSSFSheet sheet, int firstRow, int lastRow, int firstCol, int lastCol) {
         CellRangeAddress region = new CellRangeAddress(firstRow, lastRow, firstCol, lastCol);
-
         // 左边框
-        RegionUtil.setBorderLeft(borderWeight, region, sheet);
+        RegionUtil.setBorderLeft(BorderStyle.MEDIUM, region, sheet);
         // 上边框
-        RegionUtil.setBorderTop(borderWeight, region, sheet);
+        RegionUtil.setBorderTop(BorderStyle.MEDIUM, region, sheet);
         // 右边框
-        RegionUtil.setBorderRight(borderWeight, region, sheet);
+        RegionUtil.setBorderRight(BorderStyle.MEDIUM, region, sheet);
         // 下边框
-        RegionUtil.setBorderBottom(borderWeight, region, sheet);
+        RegionUtil.setBorderBottom(BorderStyle.MEDIUM, region, sheet);
     }
 
     /**
@@ -109,8 +106,7 @@ public class ExcelUtil {
             // 设置response头信息
             // 改成输出excel文件
             response.setContentType("application/vnd.ms-excel");
-            response.setHeader("Content-disposition", "attachment; filename="
-                    + fileName + ".xls");
+            response.setHeader("Content-disposition", "attachment; filename=" + fileName + ".xls");
             //将文件输出
             OutputStream os = response.getOutputStream();
             wb.write(os);

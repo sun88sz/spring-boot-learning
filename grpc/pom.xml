@@ -12,8 +12,8 @@
     <artifactId>grpc</artifactId>
     <packaging>pom</packaging>
     <modules>
-        <module>grpc-springboot</module>
-        <module>grpc-common</module>
+        <!--<module>grpc-springboot</module>-->
+        <!--<module>grpc-common</module>-->
     </modules>
 
 

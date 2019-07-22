@@ -1,8 +1,7 @@
 package com.sun.mq;
 
 import lombok.Data;
-import lombok.NoArgsConstructor;
-import org.springframework.amqp.rabbit.support.CorrelationData;
+import org.springframework.amqp.rabbit.connection.CorrelationData;
 
 /**
  * @author : Sun

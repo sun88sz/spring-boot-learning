@@ -1,11 +1,11 @@
 package com.sun.retry;
 
-import java.util.Map;
-
 import org.slf4j.Logger;
+import org.springframework.amqp.rabbit.connection.CorrelationData;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
-import org.springframework.amqp.rabbit.support.CorrelationData;
 import org.springframework.beans.factory.InitializingBean;
+
+import java.util.Map;
 
 /**
  * @author : Sun

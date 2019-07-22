@@ -76,7 +76,7 @@ public class ExcelExportTest {
         List<QSDomain> records = createRecords();
         HSSFSheet sheet = ExcelUtil.createSheet(book, sheetName, records, Collections.singletonList(head));
 
-        ExcelUtil.addCellBorder(sheet, 3, 3 + records.size() + 1, 0, 10, 2);
+        ExcelUtil.addCellBorder(sheet, 3, 3 + records.size() + 1, 0, 10);
 
         ExcelUtil.writeLocalFile(book, "D:/");
     }
