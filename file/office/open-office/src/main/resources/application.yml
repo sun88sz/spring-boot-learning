@@ -1,0 +1,6 @@
+server:
+  port: 8201
+jodconverter:
+  local:
+    enabled: true #开启本地版
+    office-home: D:\Programming\Server\OpenOffice 4 #libreoffice安装路径

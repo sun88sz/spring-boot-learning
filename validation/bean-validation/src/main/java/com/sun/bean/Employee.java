@@ -26,7 +26,7 @@ public class Employee implements Serializable {
     @NotBlank(message = "姓名不能为空")
     private String name;
 
-    @NotEmpty(message = "职位不能为空")
+    @NotEmpty(message = "EC_210101")
     private List<String> position;
 
     @Valid
