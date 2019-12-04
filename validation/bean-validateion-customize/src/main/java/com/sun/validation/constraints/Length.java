@@ -1,6 +1,6 @@
-package com.sun.bean.customize;
+package com.sun.validation.constraints;
 
-import com.sun.error.ErrorCode;
+import com.sun.validation.constraintvalidation.LengthValidator;
 
 import javax.validation.Constraint;
 import javax.validation.Payload;
@@ -13,35 +13,37 @@ import static java.lang.annotation.ElementType.*;
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
 /**
- * The annotated element must not be {@code null}.
- * Accepts any type.
+ * Validate that the string is between min and max included.
  *
  * @author Emmanuel Bernard
+ * @author Hardy Ferentschik
  */
+@Documented
 @Target({METHOD, FIELD, ANNOTATION_TYPE, CONSTRUCTOR, PARAMETER, TYPE_USE})
 @Retention(RUNTIME)
-@Repeatable(NotNull.List.class)
-@Documented
-@Constraint(validatedBy = {})
-public @interface NotNull {
+@Repeatable(Length.List.class)
+@Constraint(validatedBy = {LengthValidator.class})
+public @interface Length {
 
-    String message() default "{javax.validation.constraints.NotNull.message}";
+    String property();
+
+    int min() default 0;
+
+    int max() default Integer.MAX_VALUE;
+
+    String message() default "{validation.default.Length.message}";
 
     Class<?>[] groups() default {};
 
     Class<? extends Payload>[] payload() default {};
 
-    ErrorCode error();
-
     /**
-     * Defines several {@link javax.validation.constraints.NotNull} annotations on the same element.
-     *
-     * @see javax.validation.constraints.NotNull
+     * Defines several {@code @Length} annotations on the same element.
      */
     @Target({METHOD, FIELD, ANNOTATION_TYPE, CONSTRUCTOR, PARAMETER, TYPE_USE})
     @Retention(RUNTIME)
     @Documented
-    @interface List {
-        NotNull[] value();
+    public @interface List {
+        Length[] value();
     }
 }
