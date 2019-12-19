@@ -1,0 +1,31 @@
+= viboot-swagger2
+
+
+[[_overview]]
+== Overview
+用户管理
+
+
+=== Version information
+[%hardbreaks]
+__Version__ : 1.0
+
+
+=== Contact information
+[%hardbreaks]
+__Contact__ : Sun
+__Contact Email__ : sun88sz@126.com
+
+
+=== URI scheme
+[%hardbreaks]
+__Host__ : localhost:8080
+__BasePath__ : /
+
+
+=== Tags
+
+* 用户管理 : User Controller
+
+
+
