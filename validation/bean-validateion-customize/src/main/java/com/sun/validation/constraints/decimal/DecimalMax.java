@@ -6,9 +6,7 @@
  */
 package com.sun.validation.constraints.decimal;
 
-import com.sun.validation.constraintvalidation.decimal.DecimalMaxValidatorForBigDecimal;
-import com.sun.validation.constraintvalidation.decimal.DecimalMaxValidatorForDouble;
-import com.sun.validation.constraintvalidation.decimal.DecimalMaxValidatorForLong;
+import com.sun.validation.constraintvalidation.decimal.*;
 
 import javax.validation.Constraint;
 import javax.validation.Payload;
@@ -43,7 +41,12 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 @Retention(RUNTIME)
 @Repeatable(DecimalMax.List.class)
 @Documented
-@Constraint(validatedBy = {DecimalMaxValidatorForBigDecimal.class, DecimalMaxValidatorForDouble.class, DecimalMaxValidatorForLong.class})
+@Constraint(validatedBy = {DecimalMaxValidatorForBigDecimal.class,
+        DecimalMaxValidatorForBigInteger.class,
+        DecimalMaxValidatorForDouble.class,
+        DecimalMaxValidatorForFloat.class,
+        DecimalMaxValidatorForLong.class,
+        DecimalMaxValidatorForNumber.class})
 public @interface DecimalMax {
 
     String property();

@@ -12,7 +12,7 @@ package com.sun.validation.constraintvalidation.decimal;
  *
  * @author Marko Bekhta
  */
-public class DecimalMinValidatorForNumber extends AbstractDecimalMinValidator<Number> {
+public class DecimalMinValidatorForNumber extends CustomerConstraintDecimalMinValidator<Number> {
 
 	@Override protected int compare(Number number) {
 		return DecimalNumberComparatorHelper.compare( number, minValue );

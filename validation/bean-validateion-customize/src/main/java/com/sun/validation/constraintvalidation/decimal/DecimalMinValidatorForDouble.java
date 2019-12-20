@@ -14,7 +14,7 @@ import org.hibernate.validator.internal.constraintvalidators.bv.number.InfinityN
  *
  * @author Marko Bekhta
  */
-public class DecimalMinValidatorForDouble extends AbstractDecimalMinValidator<Double> {
+public class DecimalMinValidatorForDouble extends CustomerConstraintDecimalMinValidator<Double> {
 
 	@Override protected int compare(Double number) {
 		return DecimalNumberComparatorHelper.compare( number, minValue, InfinityNumberComparatorHelper.LESS_THAN );

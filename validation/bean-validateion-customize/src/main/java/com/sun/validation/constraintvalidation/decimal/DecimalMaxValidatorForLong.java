@@ -12,7 +12,7 @@ package com.sun.validation.constraintvalidation.decimal;
  *
  * @author Marko Bekhta
  */
-public class DecimalMaxValidatorForLong extends AbstractDecimalMaxValidator<Long> {
+public class DecimalMaxValidatorForLong extends CustomerConstraintDecimalMaxValidator<Long> {
 
 	@Override protected int compare(Long number) {
 		return DecimalNumberComparatorHelper.compare( number, maxValue );

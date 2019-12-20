@@ -6,7 +6,7 @@
  */
 package com.sun.validation.constraintvalidation.decimal;
 
-import com.sun.validation.AbstractValidator;
+import com.sun.validation.CustomerConstraintValidator;
 import com.sun.validation.constraints.decimal.DecimalMax;
 import org.hibernate.validator.internal.util.logging.Log;
 import org.hibernate.validator.internal.util.logging.LoggerFactory;
@@ -23,7 +23,7 @@ import java.math.BigDecimal;
  * @author Xavier Sosnovsky
  * @author Marko Bekhta
  */
-public abstract class AbstractDecimalMaxValidator<T> extends AbstractValidator<DecimalMax, T> {
+abstract class CustomerConstraintDecimalMaxValidator<T> implements CustomerConstraintValidator<DecimalMax, T> {
 
 	private static final Log LOG = LoggerFactory.make( MethodHandles.lookup() );
 

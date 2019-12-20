@@ -6,9 +6,7 @@
  */
 package com.sun.validation.constraints.decimal;
 
-import com.sun.validation.constraintvalidation.decimal.DecimalMinValidatorForBigDecimal;
-import com.sun.validation.constraintvalidation.decimal.DecimalMinValidatorForDouble;
-import com.sun.validation.constraintvalidation.decimal.DecimalMinValidatorForLong;
+import com.sun.validation.constraintvalidation.decimal.*;
 
 import javax.validation.Constraint;
 import javax.validation.Payload;
@@ -43,7 +41,12 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 @Retention(RUNTIME)
 @Repeatable(DecimalMin.List.class)
 @Documented
-@Constraint(validatedBy = {DecimalMinValidatorForBigDecimal.class, DecimalMinValidatorForDouble.class, DecimalMinValidatorForLong.class})
+@Constraint(validatedBy = {DecimalMinValidatorForBigDecimal.class,
+        DecimalMinValidatorForBigInteger.class,
+        DecimalMinValidatorForDouble.class,
+        DecimalMinValidatorForFloat.class,
+        DecimalMinValidatorForLong.class,
+        DecimalMinValidatorForNumber.class})
 public @interface DecimalMin {
 
     String property();

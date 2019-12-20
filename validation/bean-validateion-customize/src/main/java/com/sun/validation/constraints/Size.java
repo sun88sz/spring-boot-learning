@@ -1,5 +1,7 @@
 package com.sun.validation.constraints;
 
+import com.sun.validation.constraintvalidation.size.*;
+
 import javax.validation.Constraint;
 import javax.validation.Payload;
 import java.lang.annotation.Documented;
@@ -24,39 +26,50 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
  *
  * @author Emmanuel Bernard
  */
-@Target({ METHOD, FIELD, ANNOTATION_TYPE, CONSTRUCTOR, PARAMETER })
+@Target({METHOD, FIELD, ANNOTATION_TYPE, CONSTRUCTOR, PARAMETER})
 @Retention(RUNTIME)
 @Documented
-@Constraint(validatedBy = { })
+@Constraint(validatedBy = {SizeValidatorForArray.class,
+        SizeValidatorForArraysOfBoolean.class,
+        SizeValidatorForArraysOfByte.class,
+        SizeValidatorForArraysOfChar.class,
+        SizeValidatorForArraysOfDouble.class,
+        SizeValidatorForArraysOfFloat.class,
+        SizeValidatorForArraysOfInt.class,
+        SizeValidatorForArraysOfLong.class,
+        SizeValidatorForArraysOfShort.class,
+        SizeValidatorForCharSequence.class,
+        SizeValidatorForCollection.class,
+        SizeValidatorForMap.class})
 public @interface Size {
-	String property();
+    String property();
 
-	String message() default "{validation.default.Size.message}";
+    String message() default "{validation.default.Size.message}";
 
-	Class<?>[] groups() default { };
+    Class<?>[] groups() default {};
 
-	Class<? extends Payload>[] payload() default { };
+    Class<? extends Payload>[] payload() default {};
 
-	/**
-	 * @return size the element must be higher or equal to
-	 */
-	int min() default 0;
+    /**
+     * @return size the element must be higher or equal to
+     */
+    int min() default 0;
 
-	/**
-	 * @return size the element must be lower or equal to
-	 */
-	int max() default Integer.MAX_VALUE;
+    /**
+     * @return size the element must be lower or equal to
+     */
+    int max() default Integer.MAX_VALUE;
 
-	/**
-	 * Defines several {@link Size} annotations on the same element.
-	 *
-	 * @see Size
-	 */
-	@Target({ METHOD, FIELD, ANNOTATION_TYPE, CONSTRUCTOR, PARAMETER })
-	@Retention(RUNTIME)
-	@Documented
-	@interface List {
+    /**
+     * Defines several {@link Size} annotations on the same element.
+     *
+     * @see Size
+     */
+    @Target({METHOD, FIELD, ANNOTATION_TYPE, CONSTRUCTOR, PARAMETER})
+    @Retention(RUNTIME)
+    @Documented
+    @interface List {
 
-		Size[] value();
-	}
+        Size[] value();
+    }
 }

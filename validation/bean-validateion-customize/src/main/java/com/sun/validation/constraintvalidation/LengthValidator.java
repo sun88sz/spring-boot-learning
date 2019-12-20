@@ -1,6 +1,6 @@
 package com.sun.validation.constraintvalidation;
 
-import com.sun.validation.AbstractValidator;
+import com.sun.validation.CustomerConstraintValidator;
 import com.sun.validation.constraints.Length;
 import org.hibernate.validator.internal.util.logging.Log;
 import org.hibernate.validator.internal.util.logging.LoggerFactory;
@@ -8,7 +8,7 @@ import org.hibernate.validator.internal.util.logging.LoggerFactory;
 import javax.validation.ConstraintValidatorContext;
 import java.lang.invoke.MethodHandles;
 
-public class LengthValidator extends AbstractValidator<Length, CharSequence> {
+public class LengthValidator implements CustomerConstraintValidator<Length, CharSequence> {
 
     private static final Log LOG = LoggerFactory.make(MethodHandles.lookup());
 

@@ -1,6 +1,7 @@
 package com.sun.handler;
 
 import com.sun.exception.BusinessException;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +18,7 @@ import java.util.List;
  */
 @Configuration
 @ControllerAdvice("com.sun")
+@Slf4j
 public class ExceptionAopHandler {
 
     /**
@@ -36,14 +38,13 @@ public class ExceptionAopHandler {
             // 多个字段有多种验证
             // 一个字段可能多种验证
             String code = fieldError.getCode();
-            System.out.println(code);
-
+            log.info(code);
 
             message.append(fieldError.getDefaultMessage());
             message.append("\r\n");
         }
-        throw BusinessException.build(10000, message.toString());
-//        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(message.toString());
+//        throw BusinessException.build(10000, message.toString());
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(message.toString());
     }
 
 

@@ -1,6 +1,5 @@
 package com.sun.validation;
 
-import lombok.extern.slf4j.Slf4j;
 import org.hibernate.validator.internal.engine.constraintvalidation.ConstraintValidatorContextImpl;
 
 import javax.validation.ConstraintValidator;
@@ -12,18 +11,7 @@ import java.lang.annotation.Annotation;
  *
  * @param
  */
-@Slf4j
-public abstract class AbstractValidator<A extends Annotation, T> implements ConstraintValidator<A, T> {
-
-    /**
-     * 初始化可由具体类实现
-     *
-     * @param constraintAnnotation
-     */
-    @Override
-    public void initialize(A constraintAnnotation) {
-
-    }
+public interface CustomerConstraintValidator<A extends Annotation, T> extends ConstraintValidator<A, T> {
 
     /**
      * 初始化具体由实现类实现
@@ -33,7 +21,7 @@ public abstract class AbstractValidator<A extends Annotation, T> implements Cons
      * @return
      */
     @Override
-    public boolean isValid(T value, ConstraintValidatorContext context) {
+    default boolean isValid(T value, ConstraintValidatorContext context) {
         // 获取验证结果,采用模板方法
         boolean result = doIsValid(value, context);
         // 当验证错误时修改默认信息
@@ -62,5 +50,5 @@ public abstract class AbstractValidator<A extends Annotation, T> implements Cons
      * @param context
      * @return
      */
-    public abstract boolean doIsValid(T value, ConstraintValidatorContext context);
+    boolean doIsValid(T value, ConstraintValidatorContext context);
 }
