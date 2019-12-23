@@ -47,9 +47,10 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
         DecimalMinValidatorForFloat.class,
         DecimalMinValidatorForLong.class,
         DecimalMinValidatorForNumber.class})
+@Deprecated
 public @interface DecimalMin {
 
-    String property();
+    String property() default "";
 
     String message() default "{validation.default.DecimalMin.message}";
 

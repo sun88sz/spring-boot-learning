@@ -25,7 +25,7 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 @Constraint(validatedBy = {LengthValidator.class})
 public @interface Length {
 
-    String property();
+    String property() default "";
 
     int min() default 0;
 

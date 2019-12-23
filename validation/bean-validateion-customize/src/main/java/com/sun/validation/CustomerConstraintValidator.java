@@ -31,6 +31,7 @@ public interface CustomerConstraintValidator<A extends Annotation, T> extends Co
                 ConstraintValidatorContextImpl constraintValidatorContext = (ConstraintValidatorContextImpl) context;
                 // 获取默认提示信息
                 String defaultConstraintMessageTemplate = context.getDefaultConstraintMessageTemplate();
+
                 Object key = constraintValidatorContext.getConstraintDescriptor().getAttributes().get("property");
                 // 禁用默认提示信息
                 context.disableDefaultConstraintViolation();

@@ -33,7 +33,7 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 @Repeatable(NotBlank.List.class)
 public @interface NotBlank {
 
-    String property();
+    String property() default "";
 
     String message() default "{validation.default.NotBlank.message}";
 

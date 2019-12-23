@@ -49,7 +49,7 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 @Repeatable(NotEmpty.List.class)
 public @interface NotEmpty {
 
-    String property();
+    String property() default "";
 
     String message() default "{validation.default.NotEmpty.message}";
 

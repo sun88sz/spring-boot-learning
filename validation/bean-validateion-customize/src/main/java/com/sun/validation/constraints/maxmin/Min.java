@@ -48,7 +48,7 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
         MinValidatorForNumber.class})
 public @interface Min {
 
-    String property();
+    String property() default "";
 
     String message() default "{validation.default.Min.message}";
 

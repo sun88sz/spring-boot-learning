@@ -40,9 +40,12 @@ public class ExceptionAopHandler {
             String code = fieldError.getCode();
             log.info(code);
 
+            // 返回统一的错误码
+
             message.append(fieldError.getDefaultMessage());
             message.append("\r\n");
         }
+
 //        throw BusinessException.build(10000, message.toString());
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(message.toString());
     }

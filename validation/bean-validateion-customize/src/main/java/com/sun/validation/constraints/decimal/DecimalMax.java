@@ -47,9 +47,10 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
         DecimalMaxValidatorForFloat.class,
         DecimalMaxValidatorForLong.class,
         DecimalMaxValidatorForNumber.class})
+@Deprecated
 public @interface DecimalMax {
 
-    String property();
+    String property() default "";
 
     String message() default "{validation.default.DecimalMax.message}";
 

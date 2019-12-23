@@ -25,7 +25,7 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 @Constraint(validatedBy = {NotNullValidator.class})
 public @interface NotNull {
 
-    String property();
+    String property() default "";
 
     String message() default "{validation.default.NotNull.message}";
 

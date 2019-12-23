@@ -42,7 +42,7 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
         SizeValidatorForCollection.class,
         SizeValidatorForMap.class})
 public @interface Size {
-    String property();
+    String property() default "";
 
     String message() default "{validation.default.Size.message}";
 

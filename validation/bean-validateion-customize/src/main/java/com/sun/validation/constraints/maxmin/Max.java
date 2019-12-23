@@ -48,7 +48,7 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
         MaxValidatorForNumber.class})
 public @interface Max {
 
-    String property();
+    String property() default "";
 
     String message() default "{validation.default.Max.message}";
 
