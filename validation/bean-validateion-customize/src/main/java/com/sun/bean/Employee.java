@@ -13,6 +13,7 @@ import lombok.Data;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.Date;
 import java.util.List;
 
 @Data
@@ -39,5 +40,6 @@ public class Employee implements Serializable {
     @Min(value = ValidationConstant.HEIGHT_MIN)
     private Double height;
 
+    private Date date;
 
 }

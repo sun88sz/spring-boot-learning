@@ -21,4 +21,11 @@ public class EmployeeController {
         return ResponseEntity.ok().body(employee);
     }
 
+
+    @ResponseStatus(HttpStatus.CREATED)
+    @RequestMapping("/test")
+    public ResponseEntity test( @RequestBody Employee employee) {
+        return ResponseEntity.ok().body(employee);
+    }
+
 }

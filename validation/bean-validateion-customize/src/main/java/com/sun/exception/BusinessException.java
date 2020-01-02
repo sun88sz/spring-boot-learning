@@ -16,7 +16,6 @@ public class BusinessException extends RuntimeException {
 
     }
 
-    @Deprecated
     public BusinessException(ErrorCode errorCode) {
         this.errorCode = errorCode;
     }

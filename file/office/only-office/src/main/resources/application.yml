@@ -9,3 +9,6 @@ spring:
   mvc:
     view:
       suffix: .jsp
+      prefix: /WEB-INF/jsp/
+filesize-max: 5242880
+storage-folder: app_data

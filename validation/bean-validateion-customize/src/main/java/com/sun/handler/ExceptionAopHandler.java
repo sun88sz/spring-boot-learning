@@ -1,6 +1,7 @@
 package com.sun.handler;
 
 import com.sun.exception.BusinessException;
+import com.sun.exception.ErrorCodes;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpStatus;
@@ -42,9 +43,13 @@ public class ExceptionAopHandler {
 
             // 返回统一的错误码
 
+
             message.append(fieldError.getDefaultMessage());
             message.append("\r\n");
         }
+
+        BusinessException build = BusinessException.build(ErrorCodes.PARAM_VALIDATE_ERROR);
+
 
 //        throw BusinessException.build(10000, message.toString());
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(message.toString());

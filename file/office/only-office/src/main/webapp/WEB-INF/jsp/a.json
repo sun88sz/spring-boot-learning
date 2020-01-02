@@ -1,0 +1,23 @@
+{
+  "type": "desktop",
+  "documentType": "spreadsheet",
+  "document": {
+    "title": "sample.xlsx",
+    "url": "http://localhost:8081/app_data/192.168.2.22/sample.xlsx",
+    "fileType": "xlsx",
+    "key": "-668047287"
+  },
+  "editorConfig": {
+    "mode": "view",
+    "callbackUrl": "",
+    "user": {
+      "id": "192.168.2.22",
+      "name": "John Smith"
+    },
+    "customization": {
+      "goback": {
+        "url": "http://localhost:8081/IndexServlet"
+      }
+    }
+  }
+}
