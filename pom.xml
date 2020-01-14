@@ -38,7 +38,7 @@
         <grpc.version>1.14.0</grpc.version>
         <protobuf.version>3.6.0</protobuf.version>
 
-        <jetty-server.version>9.3.16.v20170120</jetty-server.version>
+        <jetty-server.version>9.4.25.v20191220</jetty-server.version>
 
         <spring.version>5.0.8.RELEASE</spring.version>
         <!--        <spring-boot.version>1.5.1.RELEASE</spring-boot.version>-->
