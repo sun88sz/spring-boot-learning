@@ -19,6 +19,7 @@
         <module>_test</module>
         <module>expression-evaluator</module>
         <module>joda</module>
+        <module>lombok</module>
     </modules>
 
 
