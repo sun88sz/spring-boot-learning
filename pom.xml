@@ -27,6 +27,7 @@
         <module>swagger</module>
         <module>common</module>
         <module>database</module>
+        <module>spring-framework</module>
     </modules>
 
     <properties>
